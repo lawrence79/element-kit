@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Class: Checkbox</title>
+    <title>JSDoc: Class: InputField</title>
     
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">Class: Checkbox</h1>
+    <h1 class="page-title">Class: InputField</h1>
     
     
 
@@ -27,7 +27,7 @@
     
 <header>
     <h2>
-    Checkbox
+    InputField
     </h2>
     
 </header>  
@@ -39,7 +39,7 @@
     
         
 <dt>
-    <h4 class="name" id="Checkbox"><span class="type-signature"></span>new Checkbox<span class="signature">(options)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="InputField"><span class="type-signature"></span>new InputField<span class="signature">()</span><span class="type-signature"></span></h4>
     
     
 </dt>
@@ -47,7 +47,7 @@
     
     
     <div class="description">
-        Adds JS functionality to an input checkbox.
+        Adds useful logic to an input field.
     </div>
     
 
@@ -58,48 +58,6 @@
     
         <h5>Parameters:</h5>
         
-
-<table class="params">
-    <thead>
-	<tr>
-		
-		<th>Name</th>
-		
-		
-		<th>Type</th>
-		
-		
-		
-		
-		
-		<th class="last">Description</th>
-	</tr>
-	</thead>
-	
-	<tbody>
-	
-	
-        <tr>
-            
-                <td class="name"><code>options</code></td>
-            
-            
-            <td class="type">
-            
-                
-<span class="param-type">object</span>
-
-
-            
-            </td>
-            
-            
-            
-            
-            
-            <td class="description last">Options to pass
-                <h6>Properties</h6>
-                
 
 <table class="params">
     <thead>
@@ -125,7 +83,7 @@
 	
         <tr>
             
-                <td class="name"><code>el</code></td>
+                <td class="name"><code>options.el</code></td>
             
             
             <td class="type">
@@ -149,20 +107,20 @@
             
             
             
-            <td class="description last">The input element checkbox</td>
+            <td class="description last">The input field element</td>
         </tr>
 	
 	
 	
         <tr>
             
-                <td class="name"><code>onChecked</code></td>
+                <td class="name"><code>options.onChange</code></td>
             
             
             <td class="type">
             
                 
-<span class="param-type"><a href="Checkbox.html#onChecked">Checkbox~onChecked</a></span>
+<span class="param-type"><a href="InputField.html#onChange">InputField~onChange</a></span>
 
 
             
@@ -182,47 +140,14 @@
             
             
             
-            <td class="description last">A callback function that fires when the checkbox is checked</td>
+            <td class="description last">A callback function that fires when the input value changes</td>
         </tr>
 	
 	
 	
         <tr>
             
-                <td class="name"><code>onUnchecked</code></td>
-            
-            
-            <td class="type">
-            
-                
-<span class="param-type"><a href="Checkbox.html#onUnchecked">Checkbox~onUnchecked</a></span>
-
-
-            
-            </td>
-            
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-                    
-                
-                    
-                
-                </td>
-            
-            
-            
-            
-            <td class="description last">A callback function that fires when the checkbox is un-checked</td>
-        </tr>
-	
-	
-	
-        <tr>
-            
-                <td class="name"><code>cssPrefix</code></td>
+                <td class="name"><code>options.cssPrefix</code></td>
             
             
             <td class="type">
@@ -254,12 +179,6 @@
 	
 	</tbody>
 </table>
-            </td>
-        </tr>
-	
-	
-	</tbody>
-</table>
     
     
     
@@ -285,7 +204,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="checkbox.js.html">checkbox.js</a>, <a href="checkbox.js.html#line14">line 14</a>
+        <a href="input-field.js.html">input-field.js</a>, <a href="input-field.js.html#line12">line 12</a>
     </li></ul></dd>
     
     
@@ -339,7 +258,7 @@
         <dl>
                 
 <dt>
-    <h4 class="name" id="onChecked"><span class="type-signature"></span>onChecked<span class="signature">(value, input, UIElement)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="onChange"><span class="type-signature"></span>onChange<span class="signature">(value, input, UIElement)</span><span class="type-signature"></span></h4>
     
     
 </dt>
@@ -347,7 +266,7 @@
     
     
     <div class="description">
-        A callback function that fires when the checkbox is checked
+        The function that fires when the input value changes
     </div>
     
 
@@ -397,7 +316,7 @@
             
             
             
-            <td class="description last">The input element's value</td>
+            <td class="description last">The new value of the input element</td>
         </tr>
 	
 	
@@ -443,7 +362,7 @@
             
             
             
-            <td class="description last">The input element's container</td>
+            <td class="description last">The container of the input element</td>
         </tr>
 	
 	
@@ -474,170 +393,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="checkbox.js.html">checkbox.js</a>, <a href="checkbox.js.html#line10">line 10</a>
-    </li></ul></dd>
-    
-    
-    
-    
-    
-    
-    
-</dl>
-
-    
-    
-
-    
-
-    
-    
-    
-    
-    
-    
-    
-</dd>
-
-            
-                
-<dt>
-    <h4 class="name" id="onUnchecked"><span class="type-signature"></span>onUnchecked<span class="signature">(value, input, UIElement)</span><span class="type-signature"></span></h4>
-    
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        A callback function that fires when the checkbox is un-checked
-    </div>
-    
-
-    
-    
-    
-    
-    
-        <h5>Parameters:</h5>
-        
-
-<table class="params">
-    <thead>
-	<tr>
-		
-		<th>Name</th>
-		
-		
-		<th>Type</th>
-		
-		
-		
-		
-		
-		<th class="last">Description</th>
-	</tr>
-	</thead>
-	
-	<tbody>
-	
-	
-        <tr>
-            
-                <td class="name"><code>value</code></td>
-            
-            
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-            
-            
-            
-            
-            
-            <td class="description last">The input element's value</td>
-        </tr>
-	
-	
-	
-        <tr>
-            
-                <td class="name"><code>input</code></td>
-            
-            
-            <td class="type">
-            
-                
-<span class="param-type">HTMLInputElement</span>
-
-
-            
-            </td>
-            
-            
-            
-            
-            
-            <td class="description last">The input element</td>
-        </tr>
-	
-	
-	
-        <tr>
-            
-                <td class="name"><code>UIElement</code></td>
-            
-            
-            <td class="type">
-            
-                
-<span class="param-type">HTMLElement</span>
-
-
-            
-            </td>
-            
-            
-            
-            
-            
-            <td class="description last">The input element's container</td>
-        </tr>
-	
-	
-	</tbody>
-</table>
-    
-    
-    
-<dl class="details">
-    
-        
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="checkbox.js.html">checkbox.js</a>, <a href="checkbox.js.html#line12">line 12</a>
+        <a href="input-field.js.html">input-field.js</a>, <a href="input-field.js.html#line10">line 10</a>
     </li></ul></dd>
     
     
