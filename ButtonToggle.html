@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Class: Checkbox</title>
+    <title>JSDoc: Class: ButtonToggle</title>
     
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">Class: Checkbox</h1>
+    <h1 class="page-title">Class: ButtonToggle</h1>
     
     
 
@@ -27,7 +27,7 @@
     
 <header>
     <h2>
-    Checkbox
+    ButtonToggle
     </h2>
     
 </header>  
@@ -39,7 +39,7 @@
     
         
 <dt>
-    <h4 class="name" id="Checkbox"><span class="type-signature"></span>new Checkbox<span class="signature">(options)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="ButtonToggle"><span class="type-signature"></span>new ButtonToggle<span class="signature">()</span><span class="type-signature"></span></h4>
     
     
 </dt>
@@ -47,7 +47,7 @@
     
     
     <div class="description">
-        Adds JS functionality to an input checkbox.
+        Turns input radio or checkbox html elements into a Button Toggle.
     </div>
     
 
@@ -58,48 +58,6 @@
     
         <h5>Parameters:</h5>
         
-
-<table class="params">
-    <thead>
-	<tr>
-		
-		<th>Name</th>
-		
-		
-		<th>Type</th>
-		
-		
-		
-		
-		
-		<th class="last">Description</th>
-	</tr>
-	</thead>
-	
-	<tbody>
-	
-	
-        <tr>
-            
-                <td class="name"><code>options</code></td>
-            
-            
-            <td class="type">
-            
-                
-<span class="param-type">object</span>
-
-
-            
-            </td>
-            
-            
-            
-            
-            
-            <td class="description last">Options to pass
-                <h6>Properties</h6>
-                
 
 <table class="params">
     <thead>
@@ -125,12 +83,15 @@
 	
         <tr>
             
-                <td class="name"><code>el</code></td>
+                <td class="name"><code>options.inputs</code></td>
             
             
             <td class="type">
             
                 
+<span class="param-type">Array</span>
+|
+
 <span class="param-type">HTMLInputElement</span>
 
 
@@ -149,20 +110,20 @@
             
             
             
-            <td class="description last">The input element checkbox</td>
+            <td class="description last">The collection of input elements to be made into toggle items</td>
         </tr>
 	
 	
 	
         <tr>
             
-                <td class="name"><code>onChecked</code></td>
+                <td class="name"><code>options.onChange</code></td>
             
             
             <td class="type">
             
                 
-<span class="param-type"><a href="Checkbox.html#onCheckedCallback">Checkbox~onCheckedCallback</a></span>
+<span class="param-type"><a href="ButtonToggle.html#onChange">ButtonToggle~onChange</a></span>
 
 
             
@@ -182,47 +143,14 @@
             
             
             
-            <td class="description last">A callback function that fires when the checkbox is checked</td>
+            <td class="description last">A callback function that fires when one of the toggle elements are selected</td>
         </tr>
 	
 	
 	
         <tr>
             
-                <td class="name"><code>onUnchecked</code></td>
-            
-            
-            <td class="type">
-            
-                
-<span class="param-type"><a href="Checkbox.html#onUncheckedCallback">Checkbox~onUncheckedCallback</a></span>
-
-
-            
-            </td>
-            
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-                    
-                
-                    
-                
-                </td>
-            
-            
-            
-            
-            <td class="description last">A callback function that fires when the checkbox is un-checked</td>
-        </tr>
-	
-	
-	
-        <tr>
-            
-                <td class="name"><code>cssPrefix</code></td>
+                <td class="name"><code>options.cssPrefix</code></td>
             
             
             <td class="type">
@@ -252,9 +180,69 @@
         </tr>
 	
 	
-	</tbody>
-</table>
+	
+        <tr>
+            
+                <td class="name"><code>options.onSelect</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type"><a href="ButtonToggle.html#onSelect">ButtonToggle~onSelect</a></span>
+
+
+            
             </td>
+            
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+                    
+                
+                    
+                
+                </td>
+            
+            
+            
+            
+            <td class="description last">A callback function that fires when the button toggle element is selected</td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>options.onDeselect</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type"><a href="ButtonToggle.html#onDeselect">ButtonToggle~onDeselect</a></span>
+
+
+            
+            </td>
+            
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+                    
+                
+                    
+                
+                </td>
+            
+            
+            
+            
+            <td class="description last">A callback function that fires when the button toggle element is deselected</td>
         </tr>
 	
 	
@@ -285,7 +273,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="checkbox.js.html">checkbox.js</a>, <a href="checkbox.js.html#line14">line 14</a>
+        <a href="button-toggle.js.html">button-toggle.js</a>, <a href="button-toggle.js.html#line20">line 20</a>
     </li></ul></dd>
     
     
@@ -339,7 +327,7 @@
         <dl>
                 
 <dt>
-    <h4 class="name" id="onCheckedCallback"><span class="type-signature"></span>onCheckedCallback<span class="signature">(value, input, container)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="onChange"><span class="type-signature"></span>onChange<span class="signature">(value, input, container)</span><span class="type-signature"></span></h4>
     
     
 </dt>
@@ -347,7 +335,7 @@
     
     
     <div class="description">
-        A callback function that fires when the checkbox is checked
+        A callback function that fires when one of the button toggle elements are selected
     </div>
     
 
@@ -397,7 +385,7 @@
             
             
             
-            <td class="description last">The input element's value</td>
+            <td class="description last">The value of the input element that was changed</td>
         </tr>
 	
 	
@@ -420,7 +408,7 @@
             
             
             
-            <td class="description last">The input element</td>
+            <td class="description last">The input element that was changed</td>
         </tr>
 	
 	
@@ -443,7 +431,7 @@
             
             
             
-            <td class="description last">The input element's container</td>
+            <td class="description last">The container of the input element that was changed</td>
         </tr>
 	
 	
@@ -474,7 +462,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="checkbox.js.html">checkbox.js</a>, <a href="checkbox.js.html#line10">line 10</a>
+        <a href="button-toggle.js.html">button-toggle.js</a>, <a href="button-toggle.js.html#line14">line 14</a>
     </li></ul></dd>
     
     
@@ -502,7 +490,7 @@
             
                 
 <dt>
-    <h4 class="name" id="onUncheckedCallback"><span class="type-signature"></span>onUncheckedCallback<span class="signature">(value, input, container)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="onDeselect"><span class="type-signature"></span>onDeselect<span class="signature">(value, input, container)</span><span class="type-signature"></span></h4>
     
     
 </dt>
@@ -510,7 +498,7 @@
     
     
     <div class="description">
-        A callback function that fires when the checkbox is un-checked
+        A callback function that fires when one of the button toggle elements are de-selected
     </div>
     
 
@@ -560,7 +548,7 @@
             
             
             
-            <td class="description last">The input element's value</td>
+            <td class="description last">The value of the input element that was de-selected</td>
         </tr>
 	
 	
@@ -583,7 +571,7 @@
             
             
             
-            <td class="description last">The input element</td>
+            <td class="description last">The input element that was de-selected</td>
         </tr>
 	
 	
@@ -606,7 +594,7 @@
             
             
             
-            <td class="description last">The input element's container</td>
+            <td class="description last">The container of the input element that was de-selected</td>
         </tr>
 	
 	
@@ -637,7 +625,170 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="checkbox.js.html">checkbox.js</a>, <a href="checkbox.js.html#line12">line 12</a>
+        <a href="button-toggle.js.html">button-toggle.js</a>, <a href="button-toggle.js.html#line18">line 18</a>
+    </li></ul></dd>
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+            
+                
+<dt>
+    <h4 class="name" id="onSelect"><span class="type-signature"></span>onSelect<span class="signature">(value, input, container)</span><span class="type-signature"></span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        A callback function that fires when one of the button toggle elements are selected
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>value</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+            
+            
+            
+            
+            
+            <td class="description last">The value of the input element that was selected</td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>input</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">HTMLInputElement</span>
+
+
+            
+            </td>
+            
+            
+            
+            
+            
+            <td class="description last">The input element that was selected</td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>container</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">HTMLElement</span>
+
+
+            
+            </td>
+            
+            
+            
+            
+            
+            <td class="description last">The container of the input element that was selected</td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="button-toggle.js.html">button-toggle.js</a>, <a href="button-toggle.js.html#line16">line 16</a>
     </li></ul></dd>
     
     
