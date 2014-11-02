@@ -238,7 +238,7 @@
         
             
 <dt>
-    <h4 class="name" id="addEventListener"><span class="type-signature">&lt;static> </span>addEventListener<span class="signature">(el, event, callback, <span class="optional">useCapture</span>)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="addEventListener"><span class="type-signature">&lt;static> </span>addEventListener<span class="signature">(el, event, listener, <span class="optional">context</span>, <span class="optional">options</span>)</span><span class="type-signature"></span></h4>
     
     
 </dt>
@@ -344,12 +344,15 @@
 	
         <tr>
             
-                <td class="name"><code>callback</code></td>
+                <td class="name"><code>listener</code></td>
             
             
             <td class="type">
             
                 
+<span class="param-type">string</span>
+|
+
 <span class="param-type">function</span>
 
 
@@ -368,9 +371,96 @@
             
             
             
-            <td class="description last">The function that fires when the event happens</td>
+            <td class="description last">The name of the function (or the function itself) that should fire when the event happens</td>
         </tr>
 	
+	
+	
+        <tr>
+            
+                <td class="name"><code>context</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+            
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+                    
+                
+                    
+                
+                </td>
+            
+            
+            
+            
+            <td class="description last">The context in which the function should be called</td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>options</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+            
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+                    
+                
+                    
+                
+                </td>
+            
+            
+            
+            
+            <td class="description last">Object containing additional options
+                <h6>Properties</h6>
+                
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		<th>Argument</th>
+		
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
 	
 	
         <tr>
@@ -381,7 +471,7 @@
             <td class="type">
             
                 
-<span class="param-type">boolean</span>
+<span class="param-type">Object</span>
 
 
             
@@ -402,6 +492,12 @@
             
             
             <td class="description last">Whether to use capture (see Web.API.EventTarget.addEventListener)</td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+            </td>
         </tr>
 	
 	
@@ -432,7 +528,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="utils.js.html">utils.js</a>, <a href="utils.js.html#line191">line 191</a>
+        <a href="utils.js.html">utils.js</a>, <a href="utils.js.html#line189">line 189</a>
     </li></ul></dd>
     
     
@@ -453,6 +549,284 @@
     
     
     
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="convertCssTimeValueToMilliseconds"><span class="type-signature">&lt;static> </span>convertCssTimeValueToMilliseconds<span class="signature">(val)</span><span class="type-signature"> &rarr; {Number}</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        Converts a css timing unit value into milliseconds.
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>val</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+            
+            
+            
+            
+            
+            <td class="description last">The value string</td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="utils.js.html">utils.js</a>, <a href="utils.js.html#line272">line 272</a>
+    </li></ul></dd>
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    <h5>Returns:</h5>
+    
+            
+<div class="param-desc">
+    Returns the number of milliseconds
+</div>
+
+
+
+<dl>
+	<dt>
+		Type
+	</dt>
+	<dd>
+		
+<span class="param-type">Number</span>
+
+
+	</dd>
+</dl>
+
+        
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="convertCssUnitToNumber"><span class="type-signature">&lt;static> </span>convertCssUnitToNumber<span class="signature">(val)</span><span class="type-signature"> &rarr; {Number}</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        Removes the unit (px, ms, etc) from a css value and converts it to a number.
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>val</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+            
+            
+            
+            
+            
+            <td class="description last">The css value</td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="utils.js.html">utils.js</a>, <a href="utils.js.html#line288">line 288</a>
+    </li></ul></dd>
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    <h5>Returns:</h5>
+    
+            
+<div class="param-desc">
+    Returns the number with the css value unit removed
+</div>
+
+
+
+<dl>
+	<dt>
+		Type
+	</dt>
+	<dd>
+		
+<span class="param-type">Number</span>
+
+
+	</dd>
+</dl>
+
+        
     
     
 </dd>
@@ -731,7 +1105,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="utils.js.html">utils.js</a>, <a href="utils.js.html#line252">line 252</a>
+        <a href="utils.js.html">utils.js</a>, <a href="utils.js.html#line253">line 253</a>
     </li></ul></dd>
     
     
@@ -871,7 +1245,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="utils.js.html">utils.js</a>, <a href="utils.js.html#line169">line 169</a>
+        <a href="utils.js.html">utils.js</a>, <a href="utils.js.html#line165">line 165</a>
     </li></ul></dd>
     
     
@@ -892,6 +1266,332 @@
     
     
     
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="getCssComputedProperty"><span class="type-signature">&lt;static> </span>getCssComputedProperty<span class="signature">(el, prop)</span><span class="type-signature"> &rarr; {string}</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        Gets the computed property of an element.
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>el</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">HTMLElement</span>
+
+
+            
+            </td>
+            
+            
+            
+            
+            
+            <td class="description last">The element from which to obtain the property value</td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>prop</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+            
+            
+            
+            
+            
+            <td class="description last">The name of the property to get</td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="utils.js.html">utils.js</a>, <a href="utils.js.html#line298">line 298</a>
+    </li></ul></dd>
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    <h5>Returns:</h5>
+    
+            
+<div class="param-desc">
+    Returns the value of the property
+</div>
+
+
+
+<dl>
+	<dt>
+		Type
+	</dt>
+	<dd>
+		
+<span class="param-type">string</span>
+
+
+	</dd>
+</dl>
+
+        
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="getCssProperty"><span class="type-signature">&lt;static> </span>getCssProperty<span class="signature">(el, prop)</span><span class="type-signature"> &rarr; {string}</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        Gets the computed property of an element.
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>el</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">HTMLElement</span>
+
+
+            
+            </td>
+            
+            
+            
+            
+            
+            <td class="description last">The element from which to obtain the property value</td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>prop</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+            
+            
+            
+            
+            
+            <td class="description last">The name of the property to get</td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+        <dt class="important tag-deprecated">Deprecated:</dt><dd><ul class="dummy"><li>since 1.1.0</li><ul></dd>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="utils.js.html">utils.js</a>, <a href="utils.js.html#line310">line 310</a>
+    </li></ul></dd>
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    <h5>Returns:</h5>
+    
+            
+<div class="param-desc">
+    Returns the value of the property
+</div>
+
+
+
+<dl>
+	<dt>
+		Type
+	</dt>
+	<dd>
+		
+<span class="param-type">string</span>
+
+
+	</dd>
+</dl>
+
+        
     
     
 </dd>
@@ -1265,7 +1965,7 @@ TODO: does NOT support CSS2 selectors in IE8, update asap
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="utils.js.html">utils.js</a>, <a href="utils.js.html#line279">line 279</a>
+        <a href="utils.js.html">utils.js</a>, <a href="utils.js.html#line331">line 331</a>
     </li></ul></dd>
     
     
@@ -1302,6 +2002,145 @@ TODO: does NOT support CSS2 selectors in IE8, update asap
 	<dd>
 		
 <span class="param-type">Number</span>
+
+
+	</dd>
+</dl>
+
+        
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="getJsPropName"><span class="type-signature">&lt;static> </span>getJsPropName<span class="signature">(prop)</span><span class="type-signature"> &rarr; {string}</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        Takes a css property name and returns the javascript version of it.
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>prop</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+            
+            
+            
+            
+            
+            <td class="description last">The css property</td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="utils.js.html">utils.js</a>, <a href="utils.js.html#line319">line 319</a>
+    </li></ul></dd>
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    <h5>Returns:</h5>
+    
+            
+<div class="param-desc">
+    Returns the javascript version
+</div>
+
+
+
+<dl>
+	<dt>
+		Type
+	</dt>
+	<dd>
+		
+<span class="param-type">string</span>
 
 
 	</dd>
@@ -1618,191 +2457,6 @@ TODO: does NOT support CSS2 selectors in IE8, update asap
         
             
 <dt>
-    <h4 class="name" id="hasEventListener"><span class="type-signature">&lt;static> </span>hasEventListener<span class="signature">(el, event, callback)</span><span class="type-signature"> &rarr; {boolean}</span></h4>
-    
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        Checks if an event listener has been bounded to an element.
-    </div>
-    
-
-    
-    
-    
-    
-    
-        <h5>Parameters:</h5>
-        
-
-<table class="params">
-    <thead>
-	<tr>
-		
-		<th>Name</th>
-		
-		
-		<th>Type</th>
-		
-		
-		
-		
-		
-		<th class="last">Description</th>
-	</tr>
-	</thead>
-	
-	<tbody>
-	
-	
-        <tr>
-            
-                <td class="name"><code>el</code></td>
-            
-            
-            <td class="type">
-            
-                
-<span class="param-type">HTMLElement</span>
-
-
-            
-            </td>
-            
-            
-            
-            
-            
-            <td class="description last">The element to check</td>
-        </tr>
-	
-	
-	
-        <tr>
-            
-                <td class="name"><code>event</code></td>
-            
-            
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-            
-            
-            
-            
-            
-            <td class="description last">The event to check</td>
-        </tr>
-	
-	
-	
-        <tr>
-            
-                <td class="name"><code>callback</code></td>
-            
-            
-            <td class="type">
-            
-                
-<span class="param-type">function</span>
-
-
-            
-            </td>
-            
-            
-            
-            
-            
-            <td class="description last">The bounded function</td>
-        </tr>
-	
-	
-	</tbody>
-</table>
-    
-    
-    
-<dl class="details">
-    
-        
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="utils.js.html">utils.js</a>, <a href="utils.js.html#line219">line 219</a>
-    </li></ul></dd>
-    
-    
-    
-    
-    
-    
-    
-</dl>
-
-    
-    
-
-    
-
-    
-    
-    
-    
-    
-    <h5>Returns:</h5>
-    
-            
-<div class="param-desc">
-    Returns true if element has listener
-</div>
-
-
-
-<dl>
-	<dt>
-		Type
-	</dt>
-	<dd>
-		
-<span class="param-type">boolean</span>
-
-
-	</dd>
-</dl>
-
-        
-    
-    
-</dd>
-
-        
-            
-<dt>
     <h4 class="name" id="initialize"><span class="type-signature">&lt;static> </span>initialize<span class="signature">()</span><span class="type-signature"></span></h4>
     
     
@@ -1865,99 +2519,6 @@ TODO: does NOT support CSS2 selectors in IE8, update asap
     
     
     
-    
-    
-</dd>
-
-        
-            
-<dt>
-    <h4 class="name" id="isIE8"><span class="type-signature">&lt;static> </span>isIE8<span class="signature">()</span><span class="type-signature"> &rarr; {boolean}</span></h4>
-    
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        Checks if browser is IE 8.
-    </div>
-    
-
-    
-    
-    
-    
-    
-    
-    
-<dl class="details">
-    
-        
-    
-    
-    
-
-    
-    
-    
-        <dt class="important tag-deprecated">Deprecated:</dt><dd class="yes-def tag-deprecated"><ul class="dummy"><li>Yes</li></ul></dd>
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="utils.js.html">utils.js</a>, <a href="utils.js.html#line271">line 271</a>
-    </li></ul></dd>
-    
-    
-    
-    
-    
-    
-    
-</dl>
-
-    
-    
-
-    
-
-    
-    
-    
-    
-    
-    <h5>Returns:</h5>
-    
-            
-<div class="param-desc">
-    Returns true if the current browser is IE 8.
-</div>
-
-
-
-<dl>
-	<dt>
-		Type
-	</dt>
-	<dd>
-		
-<span class="param-type">boolean</span>
-
-
-	</dd>
-</dl>
-
-        
     
     
 </dd>
@@ -2105,7 +2666,7 @@ TODO: does NOT support CSS2 selectors in IE8, update asap
         
             
 <dt>
-    <h4 class="name" id="removeEventListener"><span class="type-signature">&lt;static> </span>removeEventListener<span class="signature">(el, event, callback, useCapture)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="removeEventListener"><span class="type-signature">&lt;static> </span>removeEventListener<span class="signature">(el, event, listener, <span class="optional">context</span>)</span><span class="type-signature"></span></h4>
     
     
 </dt>
@@ -2135,6 +2696,8 @@ TODO: does NOT support CSS2 selectors in IE8, update asap
 		<th>Type</th>
 		
 		
+		<th>Argument</th>
+		
 		
 		
 		
@@ -2160,10 +2723,18 @@ TODO: does NOT support CSS2 selectors in IE8, update asap
             </td>
             
             
+                <td class="attributes">
+                
+                    
+                
+                    
+                
+                </td>
             
             
             
-            <td class="description last">The element with the event</td>
+            
+            <td class="description last">The element that contains the event listener</td>
         </tr>
 	
 	
@@ -2183,6 +2754,14 @@ TODO: does NOT support CSS2 selectors in IE8, update asap
             </td>
             
             
+                <td class="attributes">
+                
+                    
+                
+                    
+                
+                </td>
+            
             
             
             
@@ -2193,12 +2772,15 @@ TODO: does NOT support CSS2 selectors in IE8, update asap
 	
         <tr>
             
-                <td class="name"><code>callback</code></td>
+                <td class="name"><code>listener</code></td>
             
             
             <td class="type">
             
                 
+<span class="param-type">string</span>
+|
+
 <span class="param-type">function</span>
 
 
@@ -2206,33 +2788,51 @@ TODO: does NOT support CSS2 selectors in IE8, update asap
             </td>
             
             
+                <td class="attributes">
+                
+                    
+                
+                    
+                
+                </td>
             
             
             
-            <td class="description last">The event listener function to be removed</td>
+            
+            <td class="description last">The event listener function or (name of it) to be removed</td>
         </tr>
 	
 	
 	
         <tr>
             
-                <td class="name"><code>useCapture</code></td>
+                <td class="name"><code>context</code></td>
             
             
             <td class="type">
             
                 
-<span class="param-type">boolean</span>
+<span class="param-type">Object</span>
 
 
             
             </td>
             
             
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+                    
+                
+                    
+                
+                </td>
             
             
             
-            <td class="description last">Whether to use capture (see Web.API.EventTarget.addEventListener)</td>
+            
+            <td class="description last">The context of the listener that is being removed</td>
         </tr>
 	
 	
@@ -2263,7 +2863,7 @@ TODO: does NOT support CSS2 selectors in IE8, update asap
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="utils.js.html">utils.js</a>, <a href="utils.js.html#line230">line 230</a>
+        <a href="utils.js.html">utils.js</a>, <a href="utils.js.html#line231">line 231</a>
     </li></ul></dd>
     
     
@@ -2583,13 +3183,13 @@ TODO: does NOT support CSS2 selectors in IE8, update asap
 </div>
 
 <nav>
-    <h2><a href="index.html">Index</a></h2><h3>Classes</h3><ul><li><a href="BaseFormElement.html">BaseFormElement</a></li><li><a href="ButtonToggle.html">ButtonToggle</a></li><li><a href="Checkbox.html">Checkbox</a></li><li><a href="InputField.html">InputField</a></li></ul><h3>Namespaces</h3><ul><li><a href="Utils.html">Utils</a></li></ul>
+    <h2><a href="index.html">Index</a></h2><h3>Classes</h3><ul><li><a href="BaseFormElement.html">BaseFormElement</a></li><li><a href="ButtonToggle.html">ButtonToggle</a></li><li><a href="Checkbox.html">Checkbox</a></li><li><a href="Form.html">Form</a></li><li><a href="InputField.html">InputField</a></li></ul><h3>Namespaces</h3><ul><li><a href="Utils.html">Utils</a></li></ul>
 </nav>
 
 <br clear="both">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.2</a> on Tue Oct 21 2014 23:04:22 GMT-0400 (EDT)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.2</a> on Sun Nov 02 2014 15:55:22 GMT-0500 (EST)
 </footer>
 
 <script> prettyPrint(); </script>

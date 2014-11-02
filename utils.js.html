@@ -181,11 +181,7 @@
          */
         getElementsByClassName: function (className, rootEl) {
             var el = rootEl || document;
-            if (!this.isIE8()) {
-                return el.getElementsByClassName(className);
-            } else {
-                return el.querySelectorAll('.' + className);
-            }
+            return el.getElementsByClassName(className);
         },
 
         /**
@@ -212,62 +208,67 @@
          * Adds an event listener to an element.
          * @param {HTMLElement} el - The element to listen to
          * @param {string} event - The event to listen to
-         * @param {Function} callback - The function that fires when the event happens
-         * @param {boolean} [useCapture] - Whether to use capture (see Web.API.EventTarget.addEventListener)
+         * @param {string|Function} listener - The name of the function (or the function itself) that should fire when the event happens
+         * @param {Object} [context] - The context in which the function should be called
+         * @param {Object} [options] - Object containing additional options
+         * @param {Object} [options.useCapture] - Whether to use capture (see Web.API.EventTarget.addEventListener)
          */
-        addEventListener: function (el, event, callback, useCapture) {
+        addEventListener: function (el, event, listener, context, options) {
+            var _listener = listener;
+            options = options || {};
 
-            var listener = function (e) {
-                callback(e);
-            };
-
-            if (this.getIEVersion() === 8) {
-                // IE 8!
-                // force the 'this' to be the value of the el, rather than the window object
-                // to work like our more modern friend, addEventListener()
-                el.attachEvent('on' + event, listener.bind(this));
-            } else {
-                el.addEventListener(event, listener, useCapture);
+            if (typeof _listener !== 'function') {
+                _listener = this._createEventListener(context[listener], context);
             }
 
-            // cache click function to use as unique identifier
-            // to remove event listener later
-            this.events = this.events || {};
-            this.events['e' + el + event + callback] = listener;
+            el.addEventListener(event, _listener, options.useCapture);
+
+            // cache event listener to remove later
+            this._eventListenerMap = this._eventListenerMap || [];
+            this._eventListenerMap.push({
+                el: el,
+                event: event,
+                listener: _listener,
+                listenerId: listener,
+                context: context
+            });
         },
 
         /**
-         * Checks if an event listener has been bounded to an element.
-         * @param {HTMLElement} el - The element to check
-         * @param {string} event - The event to check
-         * @param {Function} callback - The bounded function
-         * @returns {boolean} Returns true if element has listener
+         * Creates an event listener bounded to a context (useful for adding and removing events).
+         * @param {Function} listener - The listener function
+         * @param {Object} context - The context that should be used when the function is called
+         * @returns {Function} Returns an event listener function bounded to the context
+         * @private
          */
-        hasEventListener: function (el, event, callback) {
-            return this.events['e' + el + event + callback] ? true : false;
+        _createEventListener: function (listener, context) {
+            return function (e) {
+                context = context || this;
+                listener.apply(context, arguments);
+            }
         },
 
         /**
          * Removes an event listener from an element.
-         * @param {HTMLElement} el - The element with the event
+         * @param {HTMLElement} el - The element that contains the event listener
          * @param {string} event - The event to remove
-         * @param {Function} callback - The event listener function to be removed
-         * @param {boolean} useCapture - Whether to use capture (see Web.API.EventTarget.addEventListener)
+         * @param {string|Function} listener - The event listener function or (name of it) to be removed
+         * @param {Object} [context] - The context of the listener that is being removed
          */
-        removeEventListener: function (el, event, callback, useCapture) {
-            var eventKey = 'e' + el + event + callback,
-                listener;
+        removeEventListener: function (el, event, listener, context) {
+            var map = this._eventListenerMap || [],
+                i,
+                obj;
 
-            if (this.events) {
-                listener = this.events[eventKey];
-                if (this.isIE8()) {
-                    // IE 8!
-                    el.detachEvent(event, listener);
-                } else {
-                    el.removeEventListener(event, listener, useCapture);
+            if (map.length) {
+                for (i = 0; i &lt; map.length; i++) {
+                    obj = map[i];
+                    if (obj && obj.el === el && obj.event === event && obj.listenerId === listener && obj.context === context) {
+                        el.removeEventListener(event, obj.listener);
+                        this._eventListenerMap[i] = null;
+                        break;
+                    }
                 }
-
-                this.events[eventKey] = null;
             }
         },
 
@@ -291,12 +292,63 @@
         },
 
         /**
-         * Checks if browser is IE 8.
-         * @returns {boolean} Returns true if the current browser is IE 8.
-         * @deprecated
+         * Converts a css timing unit value into milliseconds.
+         * @param {string} val - The value string
+         * @returns {Number} Returns the number of milliseconds
          */
-        isIE8: function () {
-            return this.getIEVersion() === 8;
+        convertCssTimeValueToMilliseconds: function (val) {
+            var number = this.convertCssUnitToNumber(val),
+                unit = val.replace(number, '');
+            if (unit === 's') {
+                val = number * 1000;
+            } else {
+                val = number;
+            }
+            return val;
+        },
+
+        /**
+         * Removes the unit (px, ms, etc) from a css value and converts it to a number.
+         * @param {string} val - The css value
+         * @returns {Number} Returns the number with the css value unit removed
+         */
+        convertCssUnitToNumber: function (val) {
+            return Number(val.replace(/[a-z]+/, ''));
+        },
+
+        /**
+         * Gets the computed property of an element.
+         * @param {HTMLElement} el - The element from which to obtain the property value
+         * @param {string} prop - The name of the property to get
+         * @returns {string} Returns the value of the property
+         */
+        getCssComputedProperty: function (el, prop) {
+            var style = window.getComputedStyle(el);
+            return style.getPropertyValue(prop) || el.style[this.getJsPropName(prop)];
+        },
+
+        /**
+         * Gets the computed property of an element.
+         * @param {HTMLElement} el - The element from which to obtain the property value
+         * @param {string} prop - The name of the property to get
+         * @returns {string} Returns the value of the property
+         * @deprecated since 1.1.0
+         */
+        getCssProperty: function (el, prop) {
+            return this.getCssComputedProperty(el, prop);
+        },
+
+        /**
+         * Takes a css property name and returns the javascript version of it.
+         * @param {string} prop - The css property
+         * @returns {string} Returns the javascript version
+         */
+        getJsPropName: function (prop) {
+            // convert to camelCase
+            prop = prop.replace(/-([a-z])/g, function (letter) {
+                return letter[1].toUpperCase();
+            });
+            return prop;
         },
 
         /**
@@ -363,13 +415,13 @@
 </div>
 
 <nav>
-    <h2><a href="index.html">Index</a></h2><h3>Classes</h3><ul><li><a href="BaseFormElement.html">BaseFormElement</a></li><li><a href="ButtonToggle.html">ButtonToggle</a></li><li><a href="Checkbox.html">Checkbox</a></li><li><a href="InputField.html">InputField</a></li></ul><h3>Namespaces</h3><ul><li><a href="Utils.html">Utils</a></li></ul>
+    <h2><a href="index.html">Index</a></h2><h3>Classes</h3><ul><li><a href="BaseFormElement.html">BaseFormElement</a></li><li><a href="ButtonToggle.html">ButtonToggle</a></li><li><a href="Checkbox.html">Checkbox</a></li><li><a href="Form.html">Form</a></li><li><a href="InputField.html">InputField</a></li></ul><h3>Namespaces</h3><ul><li><a href="Utils.html">Utils</a></li></ul>
 </nav>
 
 <br clear="both">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.2</a> on Tue Oct 21 2014 23:04:22 GMT-0400 (EDT)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.2</a> on Sun Nov 02 2014 15:55:22 GMT-0500 (EST)
 </footer>
 
 <script> prettyPrint(); </script>
