@@ -1,3 +1,8 @@
+/** 
+* ElementKit - v0.1.2.
+* https://github.com/mkay581/element-kit.git
+* Copyright 2014 Mark Kennedy. Licensed MIT.
+*/
 (function (factory) {
     'use strict';
     // support both AMD and non-AMD
