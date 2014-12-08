@@ -1,8 +1,3 @@
-/** 
-* ElementKit - v0.1.1.
-* https://github.com/mkay581/element-kit.git
-* Copyright 2014 Mark Kennedy. Licensed MIT.
-*/
 (function (factory) {
     'use strict';
     // support both AMD and non-AMD
@@ -246,16 +241,12 @@
          * @private
          */
         _getClassList: function () {
-            if (this.el.classList) {
-                return this.el.classList;
-            } else {
-                return {
-                    add: this._addClass.bind(this),
-                    remove: this._removeClass.bind(this),
-                    contains: this._hasClass.bind(this),
-                    toggle: this._toggleClass.bind(this)
-                };
-            }
+            return {
+                add: this._addClass.bind(this),
+                remove: this._removeClass.bind(this),
+                contains: this._hasClass.bind(this),
+                toggle: this._toggleClass.bind(this)
+            };
         },
 
         /**
@@ -286,11 +277,13 @@
          * @private
          */
         _addClass: function  (className) {
-            if (!this._hasClass(className)) {
-                var existingNames = this.el.className;
-                if (existingNames) {
-                    this.el.className = existingNames + ' ';
-                }
+
+            // DOMTokenList does not allow empty strings
+            if (!className || this._hasClass(className)) {return;}
+
+            if (this.el.classList) {
+                this.el.classList.add(className);
+            } else {
                 this.el.className = this.el.className + className;
             }
         },
@@ -301,11 +294,16 @@
          * @private
          */
         _removeClass: function (className) {
-            var re;
-            if (this._hasClass(className)) {
 
+            var re;
+            // DOMTokenList does not allow empty strings
+            if (!className || !this._hasClass(className)) {return;}
+
+            if (this.el.classList) {
+                this.el.classList.remove(className);
+            } else {
                 if (this.el.className === className) {
-                    // if the only class that exists,  remove to
+                    // if the only class that exists,  remove it and make empty string
                     this.el.className = '';
                 } else {
                     re = '[\\s]*' + className;
@@ -313,6 +311,7 @@
                     this.el.className = this.el.className.replace(re, '');
                 }
             }
+
         },
 
         /**

@@ -212,4 +212,18 @@ define([
         QUnit.equal(el.kit.dataset.newValue, testVal, 'after setting a new value on dataset, the new value is returned when queried');
     });
 
+    QUnit.test('adding and removing empty strings', function() {
+        QUnit.expect(2);
+        var el = document.createElement('div');
+        var testClassName = 'testing';
+        var classListAddStub = Sinon.stub(el.classList, 'add');
+        var classListRemoveStub = Sinon.stub(el.classList, 'remove');
+        el.kit.classList.add('');
+        QUnit.equal(classListAddStub.callCount, 0, 'after passing empty string to .add() el\'s classList.add() method was not called because it is a DOMTokenList that will crash on empty strings');
+        el.kit.classList.remove('');
+        QUnit.equal(classListRemoveStub.callCount, 0, 'after passing an empty string to .remove(), el\'s classList.remove() method was not called for the same reason as above');
+        classListAddStub.restore();
+        classListRemoveStub.restore();
+    });
+
 });
