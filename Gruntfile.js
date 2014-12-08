@@ -1,11 +1,3 @@
-var path = require('path');
-
-var banner = '/** \n' +
-    '* ElementKit - v<%= pkg.version %>.\n' +
-    '* <%= pkg.repository.url %>\n' +
-    '* Copyright <%= grunt.template.today("yyyy") %> Mark Kennedy. Licensed MIT.\n' +
-    '*/\n';
-
 module.exports = function(grunt) {
     "use strict";
 
@@ -53,9 +45,6 @@ module.exports = function(grunt) {
             }
         },
         uglify: {
-            options: {
-                banner: banner
-            },
             my_target: {
                 files: {
                     'dist/element-kit.min.js': ['src/element-kit.js']
@@ -110,11 +99,15 @@ module.exports = function(grunt) {
         usebanner: {
             all: {
                 options: {
-                    banner: banner,
+                    banner: '/** \n' +
+                    '* ElementKit - v<%= pkg.version %>.\n' +
+                    '* <%= pkg.repository.url %>\n' +
+                    '* Copyright <%= grunt.template.today("yyyy") %> Mark Kennedy. Licensed MIT.\n' +
+                    '*/\n',
                     linebreak: false
                 },
                 files: {
-                    src: [ 'dist/element-kit.js']
+                    src: ['dist/element-kit.js', 'dist/element-kit.min.js']
                 }
             }
         },
@@ -125,7 +118,16 @@ module.exports = function(grunt) {
                 createTag: false,
                 tagName: 'v%VERSION%',
                 tagMessage: 'v%VERSION%',
-                push: false
+                push: false,
+                pushTo: 'origin',
+                updateConfigs: ['pkg'],
+                commitFiles: [
+                    'dist/element-kit.js',
+                    'dist/element-kit.min.js',
+                    'package.json',
+                    'bower.json'
+                ],
+                commitMessage: 'release %VERSION%'
             }
         }
     });
@@ -142,7 +144,6 @@ module.exports = function(grunt) {
         "clean",
         "copy",
         "uglify",
-        "usebanner:all",
         "connect:test",
         "qunit:build"
     ]);
@@ -151,8 +152,9 @@ module.exports = function(grunt) {
         type = type || 'patch';
         grunt.task.run([
             'bump:' + type,
-            'build'
-        ])
+            'build',
+            "usebanner:all"
+        ]);
     });
 
     grunt.registerTask( "server", [
