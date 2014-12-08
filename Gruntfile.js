@@ -118,12 +118,14 @@ module.exports = function(grunt) {
                 }
             }
         },
-        release: {
+        bump: {
             options: {
-                additionalFiles: ['bower.json'],
-                tagName: 'v<%= version %>',
-                commitMessage: 'release <%= version %>',
-                npm: false
+                files: ['package.json', 'bower.json'],
+                commit: false,
+                createTag: true,
+                tagName: 'v%VERSION%',
+                tagMessage: 'v%VERSION%',
+                push: false
             }
         }
     });
