@@ -1,5 +1,15 @@
-(function () {
-    "use strict";
+(function (factory) {
+    'use strict';
+    // support both AMD and non-AMD
+    if (typeof define === 'function' && define.amd) {
+        define(['exports'], function () {
+            return factory();
+        });
+    } else {
+        factory();
+    }
+})((function () {
+    'use strict';
     /**
      * Creates an HTML Element from an html string.
      * @param {string} html - String of html
@@ -410,7 +420,8 @@
 
             return cache[this._kitId];
         }
-});
+    });
 
+    return Kit;
 
-})();
+}));
