@@ -122,7 +122,7 @@ module.exports = function(grunt) {
             options: {
                 files: ['package.json', 'bower.json'],
                 commit: false,
-                createTag: true,
+                createTag: false,
                 tagName: 'v%VERSION%',
                 tagMessage: 'v%VERSION%',
                 push: false
@@ -146,6 +146,14 @@ module.exports = function(grunt) {
         "connect:test",
         "qunit:build"
     ]);
+
+    grunt.task.registerTask('release', 'A custom release.', function(type) {
+        type = type || 'patch';
+        grunt.task.run([
+            'bump:' + type,
+            'build'
+        ])
+    });
 
     grunt.registerTask( "server", [
         "connect:local"
