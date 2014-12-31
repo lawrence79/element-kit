@@ -68,9 +68,14 @@
          * @param {string} html - The wrapper html
          */
         appendOuterHtml: function (html) {
-            var origContainer = this.el.parentNode,
+            var parent = this.el.parentNode,
                 container = createHtmlElement(html);
-            origContainer.replaceChild(container, this.el);
+            if (parent) {
+                parent.replaceChild(container, this.el);
+            } else {
+                parent = document.createDocumentFragment();
+                parent.appendChild(container);
+            }
             container.appendChild(this.el);
             return container;
         },

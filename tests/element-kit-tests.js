@@ -157,6 +157,18 @@ define([
         QUnit.equal(wrapper.innerHTML, innerHtml, 'new element has inner html contents');
         QUnit.equal(wrapper.parentNode, origParent, 'new wrapper\'s parent node is the wrapped element\'s original parent');
     });
+
+    QUnit.test('appending outer html element when element is not in the DOM', function() {
+        QUnit.expect(2);
+        var innerEl = document.createElement('span');
+        var spanText = 'Test stuff';
+        innerEl.innerHTML = spanText;
+        var innerHtml = '<span>' + spanText + '</span>';
+        var wrapperHtml = '<div class="wrapper"></div>';
+        var wrapper = innerEl.kit.appendOuterHtml(wrapperHtml);
+        QUnit.equal(wrapper.innerHTML, innerHtml, 'new element has inner html contents');
+        QUnit.deepEqual(wrapper.parentNode.prototype, document.createDocumentFragment.prototype, 'new wrapper\'s parent node is a document fragement since element had no original parent');
+    });
     
     QUnit.test('getCssComputedProperty()', function() {
         QUnit.expect(1);
