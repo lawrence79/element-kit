@@ -3,17 +3,7 @@
 * https://github.com/mkay581/element-kit.git
 * Copyright 2014 Mark Kennedy. Licensed MIT.
 */
-(function (factory) {
-    'use strict';
-    // support both AMD and non-AMD
-    if (typeof define === 'function' && define.amd) {
-        define(['exports'], function () {
-            return factory();
-        });
-    } else {
-        factory();
-    }
-})((function () {
+(function () {
     'use strict';
     /**
      * Creates an HTML Element from an html string.
@@ -431,6 +421,4 @@
         }
     });
 
-    return Kit;
-
-}));
+})();
