@@ -145,15 +145,15 @@ module.exports = function(grunt) {
         "copy",
         "uglify",
         "connect:test",
-        "qunit:build"
+        "qunit:build",
+        "usebanner:all"
     ]);
 
     grunt.task.registerTask('release', 'A custom release.', function(type) {
         type = type || 'patch';
         grunt.task.run([
             'bump:' + type,
-            'build',
-            "usebanner:all"
+            'build'
         ]);
     });
 
