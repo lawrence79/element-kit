@@ -75,7 +75,6 @@ module.exports = function(grunt) {
             },
             local: {
                 options: {
-                    keepalive: true,
                     options: { livereload: true }
                 }
             }
@@ -85,13 +84,6 @@ module.exports = function(grunt) {
                 options: {
                     urls: [
                         'http://localhost:7000/tests/index.html'
-                    ]
-                }
-            },
-            build: {
-                options: {
-                    urls: [
-                        'http://localhost:7000/tests/index-build.html'
                     ]
                 }
             }
@@ -129,6 +121,15 @@ module.exports = function(grunt) {
                 ],
                 commitMessage: 'release %VERSION%'
             }
+        },
+        watch: {
+            scripts: {
+                files: ['src/element-kit.js'],
+                tasks: ['copy', 'uglify'],
+                options: {
+                    spawn: false
+                }
+            }
         }
     });
 
@@ -140,13 +141,18 @@ module.exports = function(grunt) {
     } );
 
     // Default grunt
-    grunt.registerTask( "build", [
+
+    grunt.registerTask( "build-files", [
         "clean",
         "copy",
         "uglify",
-        "connect:test",
-        "qunit:build",
         "usebanner:all"
+    ]);
+
+    grunt.registerTask( "build", [
+        "build-files",
+        "connect:test",
+        "qunit:local"
     ]);
 
     grunt.task.registerTask('release', 'A custom release.', function(type) {
@@ -158,7 +164,9 @@ module.exports = function(grunt) {
     });
 
     grunt.registerTask( "server", [
-        "connect:local"
+        "build-files",
+        "connect:local",
+        "watch"
     ]);
 
     grunt.registerTask( "test", [
