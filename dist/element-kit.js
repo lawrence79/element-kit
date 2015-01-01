@@ -1,9 +1,19 @@
 /** 
 * ElementKit - v0.1.5.
 * https://github.com/mkay581/element-kit.git
-* Copyright 2014 Mark Kennedy. Licensed MIT.
+* Copyright 2015 Mark Kennedy. Licensed MIT.
 */
-(function () {
+(function (factory) {
+    'use strict';
+    // support both AMD and non-AMD
+    if (typeof define === 'function' && define.amd) {
+        define(function () {
+            return factory();
+        });
+    } else {
+        factory();
+    }
+})((function () {
     'use strict';
     /**
      * Creates an HTML Element from an html string.
@@ -426,4 +436,6 @@
         }
     });
 
-})();
+    return Kit;
+
+}));
