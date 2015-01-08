@@ -291,10 +291,11 @@
             // DOMTokenList does not allow empty strings
             if (!className || this._hasClass(className)) {return;}
 
-            if (this.el.classList) {
+            if (('classList' in document.createElement('_'))) {
+                // browser supports classList!
                 this.el.classList.add(className);
             } else {
-                this.el.className = this.el.className + className;
+                this.el.className = this.el.className ? this.el.className + ' ' + className : className;
             }
         },
 
@@ -309,7 +310,7 @@
             // DOMTokenList does not allow empty strings
             if (!className || !this._hasClass(className)) {return;}
 
-            if (this.el.classList) {
+            if ('classList' in document.createElement('_')) {
                 this.el.classList.remove(className);
             } else {
                 if (this.el.className === className) {

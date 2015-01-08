@@ -40,6 +40,32 @@ define([
         QUnit.ok(!el.classList.contains(testClassName), 'removing class was successful');
     });
 
+    QUnit.test('adding and removing classes when browser does not natively support classList', function() {
+        QUnit.expect(4);
+        var el = document.createElement('div');
+        var testClassName = 'testing';
+        var origCreateElement = document.createElement;
+        document.createElement = function (arg) {
+            if (arg === '_') {
+                return {};
+            } else {
+                return origCreateElement.apply(this, arguments);
+            }
+        };
+        el.kit.classList.add(testClassName);
+        QUnit.equal(el.className, testClassName, 'new class was added successfully');
+        el.kit.classList.add(testClassName);
+        QUnit.equal(el.className, testClassName, 'adding the same class a second time does not add the class name again');
+        el.kit.classList.remove(testClassName);
+        QUnit.equal(el.className, '', 'removing class was successful');
+        var firstTestClass = 'new-class';
+        var secondTestClass = 'new-too-class';
+        el.kit.classList.add(firstTestClass);
+        el.kit.classList.add(secondTestClass);
+        QUnit.equal(el.className, firstTestClass + ' ' + secondTestClass, 'adding another class while one already exists, adds the new class correctly');
+        document.createElement = origCreateElement;
+    });
+
     QUnit.test('adding and removing a class when other classes already exist', function() {
         QUnit.expect(2);
         var testClass = 'test2';
