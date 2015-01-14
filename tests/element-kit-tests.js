@@ -77,6 +77,17 @@ define([
         el.kit.classList.remove(testClass);
         QUnit.equal(el.className, result, 'class was removed successfully, leaving all other existing classes in tact');
     });
+
+    QUnit.test('adding and removing multiple classes', function() {
+        QUnit.expect(4);
+        var el = document.createElement('div');
+        el.kit.classList.add('test1', 'test2');
+        QUnit.ok(el.classList.contains('test1'), 'after adding two classes, el has the first class');
+        QUnit.ok(el.classList.contains('test2'), 'el has the second class');
+        el.kit.classList.remove('test1', 'test2');
+        QUnit.ok(!el.classList.contains('test1'), 'after removing the two classes, el no longer has the first class');
+        QUnit.ok(!el.classList.contains('test2'), 'el no longer has the second class');
+    });
     
     QUnit.test('querying whether the element has class names that all begin with the same prefix', function() {
         QUnit.expect(1);
@@ -248,20 +259,6 @@ define([
         var testVal = 'my-test-value';
         el.kit.dataset.newValue = testVal;
         QUnit.equal(el.kit.dataset.newValue, testVal, 'after setting a new value on dataset, the new value is returned when queried');
-    });
-
-    QUnit.test('adding and removing empty strings', function() {
-        QUnit.expect(2);
-        var el = document.createElement('div');
-        var testClassName = 'testing';
-        var classListAddStub = Sinon.stub(el.classList, 'add');
-        var classListRemoveStub = Sinon.stub(el.classList, 'remove');
-        el.kit.classList.add('');
-        QUnit.equal(classListAddStub.callCount, 0, 'after passing empty string to .add() el\'s classList.add() method was not called because it is a DOMTokenList that will crash on empty strings');
-        el.kit.classList.remove('');
-        QUnit.equal(classListRemoveStub.callCount, 0, 'after passing an empty string to .remove(), el\'s classList.remove() method was not called for the same reason as above');
-        classListAddStub.restore();
-        classListRemoveStub.restore();
     });
 
 });

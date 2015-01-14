@@ -278,46 +278,61 @@
 
         /**
          * Adds a CSS class to the element.
-         * @param {string} className - The css class value to add
+         * @param {...string} arguments - The arguments containing css classes to add
          * @private
          */
-        _addClass: function  (className) {
-
-            // DOMTokenList does not allow empty strings
-            if (!className || this._hasClass(className)) {return;}
-
+        _addClass: function  () {
             if (('classList' in document.createElement('_'))) {
                 // browser supports classList!
-                this.el.classList.add(className);
+                this._each(arguments, function (className) {
+                    this.el.classList.add(className);
+                }.bind(this));
             } else {
-                this.el.className = this.el.className ? this.el.className + ' ' + className : className;
+                this._each(arguments, function (className) {
+                    if (!this._hasClass(className)) {
+                        this.el.className = this.el.className ? this.el.className + ' ' + className : className;
+                    }
+                }.bind(this));
+            }
+        },
+
+        /**
+         * Triggers a callback function for a set of items.
+         * @param {Array} items - An array of items
+         * @param {Function} method - The function to execute for each item
+         * @private
+         */
+        _each: function (items, method) {
+            var count = items.length,
+                i;
+            for (i = 0; i < count; i++) {
+                method(items[i]);
             }
         },
 
         /**
          * Removes a CSS class from the element.
-         * @param {string} className - The css class value to remove
+         * @param {...string} arguments - The arguments containing css classes to remove
          * @private
          */
-        _removeClass: function (className) {
-
+        _removeClass: function () {
             var re;
-            // DOMTokenList does not allow empty strings
-            if (!className || !this._hasClass(className)) {return;}
-
             if ('classList' in document.createElement('_')) {
-                this.el.classList.remove(className);
+                this._each(arguments, function (className) {
+                    this.el.classList.remove(className);
+                }.bind(this));
             } else {
-                if (this.el.className === className) {
-                    // if the only class that exists,  remove it and make empty string
-                    this.el.className = '';
-                } else {
-                    re = '[\\s]*' + className;
-                    re = new RegExp(re, 'i');
-                    this.el.className = this.el.className.replace(re, '');
-                }
+                this._each(arguments, function (className) {
+                    if (this.el.className === className) {
+                        // if the only class that exists,  remove it and make empty string
+                        this.el.className = '';
+                    } else {
+                        re = '[\\s]*' + className;
+                        re = new RegExp(re, 'i');
+                        this.el.className = this.el.className.replace(re, '');
+                    }
+                }.bind(this));
             }
-
         },
 
         /**
