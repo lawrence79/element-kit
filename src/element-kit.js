@@ -6,7 +6,7 @@
             return factory();
         });
     } else {
-        factory();
+        window.ElementKit = factory();
     }
 })((function () {
     'use strict';
