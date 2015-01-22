@@ -6,11 +6,21 @@ define([
 ], function(
     Sinon,
     QUnit,
-    TestUtils
+    TestUtils,
+    ElementKit
 ){
     "use strict";
 
-    QUnit.module('Element Tests');
+    var kit;
+
+    QUnit.module('Element Tests', {
+        setup: function () {
+            kit = new ElementKit();
+        },
+        teardown: function () {
+            kit.destroy();
+        }
+    });
 
     QUnit.test('initialization', function() {
         QUnit.expect(1);
