@@ -46,9 +46,9 @@
         return merged;
     }
 
-    var count = 0, cache = {};
+    var elementCount = 0, cache = {}, loaded;
 
-    var Kit = function (el) {
+    var Element = function (el) {
         this.el = el;
         this.classList = this._getClassList();
         this._eventListenerMap = this._eventListenerMap || [];
@@ -63,10 +63,10 @@
     /**
      * A class from which all Elements are based.
      * @description Bootstraps an element to allow for native JS methods (see https://developer.mozilla.org/en-US/docs/Web/API/Element)
-     * @class Kit
+     * @class Element
      * @param {Element} el - The element
      */
-    Kit.prototype = /** @lends Element */{
+    Element.prototype = /** @lends Element */{
 
         /**
          * Wrap a parent container element around the element.
@@ -432,21 +432,63 @@
             this.el.setAttribute('data-' + key, value);
             this._data[key] = value;
 
-        }
+        },
+
+        /**
+         * Destroys the kit on the element.
+         */
+        destroy: function () {}
     };
 
-    Object.defineProperty(Element.prototype, 'kit', {
-        get: function () {
-            if (!cache[this._kitId]) {
-                count++;
-                this._kitId = count;
-                cache[this._kitId] = new Kit(this);
+
+    var ElementKit = function (options) {
+        this.initialize(options);
+    };
+    ElementKit.prototype = {
+        /**
+         * Does a little setup for element kit.
+         */
+        initialize: function (options) {
+
+            var self = this;
+
+            this.options = extend({
+                autoLoad: true
+            }, options);
+
+            // can only define the element property once or an exception will be thrown
+            if (this.options.autoLoad && !loaded) {
+                // load element kit on ALL DOM Elements when they are created
+                loaded = Object.defineProperty(window.Element.prototype, 'kit', {
+                    get: function () {
+                        return self.load(this);
+                    }
+                });
             }
+        },
 
-            return cache[this._kitId];
-        }
-    });
+        /**
+         * Sets up the kit on an element.
+         * @param {HTMLElement} el - The element in which to load the kit onto
+         * @returns {Element} Returns the element instance
+         */
+        load: function (el) {
+            var ElementClass;
+            // only add a new instance of the class if it hasnt already been added
+            if (!cache[el._kitId]) {
+                elementCount++;
+                el._kitId = elementCount;
+                cache[el._kitId] = new Element(el);
+            }
+            return cache[el._kitId];
+        },
+        /**
+         * Destroys element kit.
+         */
+        destroy: function () {}
 
-    return Kit;
+    };
+
+    return ElementKit;
 
 }));
