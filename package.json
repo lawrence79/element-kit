@@ -10,10 +10,12 @@
     "elements",
     "html elements",
     "htmlelement",
+    "image element",
+    "image loading",
     "dataset",
     "classlist"
   ],
-  "main": "dist/element.js",
+  "main": "dist/element-kit.js",
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
   },
