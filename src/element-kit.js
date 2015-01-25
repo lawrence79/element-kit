@@ -463,7 +463,6 @@
             var el = this.el,
                 src = el.getAttribute(srcAttr);
 
-
             this._origSource = this._origSource || el.src; // store original src string
 
             if (!src) {
@@ -486,8 +485,6 @@
         show: function () {
             if (this._loadedSrc) {
                 this.el.src = this._loadedSrc;
-            } else {
-                console.warn('ElementKit error: show() cannot be called on an image that has not been loaded via load()');
             }
         },
 

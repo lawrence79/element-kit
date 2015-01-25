@@ -85,4 +85,5 @@ More methods and usage can be found on the [docs](https://github.com/mkay581/ele
 
 ## Release History
 
+ * 2015-01-24   v0.2.0   Element Kit can now be instantiated with autoload options. New Lazy-loading for HTML Image Elements.
  * 2014-12-08   v0.1.0   Official release.

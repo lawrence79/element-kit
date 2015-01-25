@@ -1,5 +1,5 @@
 /** 
-* ElementKit - v0.1.7.
+* ElementKit - v0.2.0.
 * https://github.com/mkay581/element-kit.git
 * Copyright 2015 Mark Kennedy. Licensed MIT.
 */
@@ -11,7 +11,7 @@
             return factory();
         });
     } else {
-        factory();
+        window.ElementKit = factory();
     }
 })((function () {
     'use strict';
@@ -51,27 +51,31 @@
         return merged;
     }
 
-    var count = 0, cache = {};
+    var elementCount = 0, cache = {}, loaded;
 
-    var Kit = function (el) {
-        this.el = el;
-        this.classList = this._getClassList();
-        this._eventListenerMap = this._eventListenerMap || [];
-
-        Object.defineProperty(this, 'dataset', {
-            get: function () {
-                return this.getData();
-            }.bind(this)
-        })
+    var Element = function (el) {
+        this.initialize(el);
     };
 
     /**
      * A class from which all Elements are based.
      * @description Bootstraps an element to allow for native JS methods (see https://developer.mozilla.org/en-US/docs/Web/API/Element)
-     * @class Kit
+     * @class Element
      * @param {Element} el - The element
      */
-    Kit.prototype = /** @lends Element */{
+    Element.prototype = /** @lends Element */{
+
+        initialize: function (el) {
+            this.el = el;
+            this.classList = this._getClassList();
+            this._eventListenerMap = this._eventListenerMap || [];
+
+            Object.defineProperty(this, 'dataset', {
+                get: function () {
+                    return this.getData();
+                }.bind(this)
+            });
+        },
 
         /**
          * Wrap a parent container element around the element.
@@ -283,46 +287,61 @@
 
         /**
          * Adds a CSS class to the element.
-         * @param {string} className - The css class value to add
+         * @param {...string} arguments - The arguments containing css classes to add
          * @private
          */
-        _addClass: function  (className) {
-
-            // DOMTokenList does not allow empty strings
-            if (!className || this._hasClass(className)) {return;}
-
+        _addClass: function  () {
             if (('classList' in document.createElement('_'))) {
                 // browser supports classList!
-                this.el.classList.add(className);
+                this._each(arguments, function (className) {
+                    this.el.classList.add(className);
+                }.bind(this));
             } else {
-                this.el.className = this.el.className ? this.el.className + ' ' + className : className;
+                this._each(arguments, function (className) {
+                    if (!this._hasClass(className)) {
+                        this.el.className = this.el.className ? this.el.className + ' ' + className : className;
+                    }
+                }.bind(this));
+            }
+        },
+
+        /**
+         * Triggers a callback function for a set of items.
+         * @param {Array} items - An array of items
+         * @param {Function} method - The function to execute for each item
+         * @private
+         */
+        _each: function (items, method) {
+            var count = items.length,
+                i;
+            for (i = 0; i < count; i++) {
+                method(items[i]);
             }
         },
 
         /**
          * Removes a CSS class from the element.
-         * @param {string} className - The css class value to remove
+         * @param {...string} arguments - The arguments containing css classes to remove
          * @private
          */
-        _removeClass: function (className) {
-
+        _removeClass: function () {
             var re;
-            // DOMTokenList does not allow empty strings
-            if (!className || !this._hasClass(className)) {return;}
-
             if ('classList' in document.createElement('_')) {
-                this.el.classList.remove(className);
+                this._each(arguments, function (className) {
+                    this.el.classList.remove(className);
+                }.bind(this));
             } else {
-                if (this.el.className === className) {
-                    // if the only class that exists,  remove it and make empty string
-                    this.el.className = '';
-                } else {
-                    re = '[\\s]*' + className;
-                    re = new RegExp(re, 'i');
-                    this.el.className = this.el.className.replace(re, '');
-                }
+                this._each(arguments, function (className) {
+                    if (this.el.className === className) {
+                        // if the only class that exists,  remove it and make empty string
+                        this.el.className = '';
+                    } else {
+                        re = '[\\s]*' + className;
+                        re = new RegExp(re, 'i');
+                        this.el.className = this.el.className.replace(re, '');
+                    }
+                }.bind(this));
             }
-
         },
 
         /**
@@ -422,21 +441,189 @@
             this.el.setAttribute('data-' + key, value);
             this._data[key] = value;
 
-        }
+        },
+
+        /**
+         * Destroys the kit on the element.
+         */
+        destroy: function () {}
     };
 
-    Object.defineProperty(Element.prototype, 'kit', {
-        get: function () {
-            if (!cache[this._kitId]) {
-                count++;
-                this._kitId = count;
-                cache[this._kitId] = new Kit(this);
+    /**
+     * A class from which all image elements are based.
+     * @class ImageElement
+     * @param {Element} el - The element
+     * @todo: find a more simple way to extend Element class along with its prototypes
+     */
+    var ImageElement = function (el) {
+        Element.prototype.initialize.call(this, el);
+    };
+    ImageElement.prototype = extend({}, Element.prototype, {
+        /**
+         * Loads the image asset from a provided source url.
+         * @param {string} srcAttr - The attribute on the element which has the image source url
+         * @param {Function} [callback] - The callback fired when the image has loaded
+         */
+        load: function (srcAttr, callback) {
+            var el = this.el,
+                src = el.getAttribute(srcAttr);
+
+            this._origSource = this._origSource || el.src; // store original src string
+
+            if (!src) {
+                console.warn('ElementKit error: ImageElement has no "' + srcAttr + '" attribute to load');
             }
 
-            return cache[this._kitId];
+            if (src.indexOf(',') !== -1) {
+                // image is a srcset!
+                src = this._getImageSourceSetPath(src);
+            }
+            this._loadImage(src, callback);
+            this._loadedSrc = src;
+            return this;
+        },
+
+        /**
+         * Adds a source path to the src attribute of the image element.
+         * (injects the image into the browser's DOM).
+         */
+        show: function () {
+            if (this._loadedSrc) {
+                this.el.src = this._loadedSrc;
+            }
+        },
+
+        /**
+         * Loads an image in a virtual DOM which will be cached in the browser and shown.
+         * @param {string} src - The image source url
+         * @param {Function} callback - Function that is called when image has loaded
+         * @param {HTMLImageElement} [el] - Optional image element to load the image onto
+         * @returns {string} Returns the image url source
+         * @private
+         */
+        _loadImage: function (src, callback, el) {
+            var img = new Image();
+            el = el || document.createElement('img');
+            img.onload = callback || function(){};
+            el.src = src;
+            return src;
+        },
+
+        /**
+         * Gets the original src path before element kit got involved.
+         * @returns {string|*}
+         */
+        getInitialImageSourcePath: function () {
+            return this._origSource;
+        },
+
+        /**
+         * Sniffs srcset attribute and detects the images viewport size to return the correct source image to display
+         * FYI: browsers do have this functionality natively but some of them have it turned by default (Firefox, IE, etc)
+         * @param {string} srcSet - The source set attribute
+         * @returns {string} Returns the source image path
+         * @private
+         */
+        _getImageSourceSetPath: function (srcSet) {
+            var viewportWidth = window.innerWidth,
+                viewportHeight = window.innerHeight,
+                src,
+                widthHeightMap,
+                width,
+                height,
+                found;
+            srcSet.split(',').forEach(function (str) {
+                widthHeightMap = this._buildSourceMapWidthHeight(str);
+                width = widthHeightMap.width || 0;
+                height = widthHeightMap.height || 0;
+                if (!found && viewportWidth >= width && viewportHeight >= height) {
+                    src = str.split(' ')[0];
+                    found = true;
+                }
+            }.bind(this));
+            return src;
+        },
+
+        /**
+         * Builds a mapping of width and height within a srcset attribute.
+         * @param {String} str - The srcset attribute string
+         * @param {Object} [map] - The object that width and height keys will be attached to
+         * @returns {*|{}}
+         * @private
+         */
+        _buildSourceMapWidthHeight: function (str, map) {
+            var frags = str.split(' '),
+                attrId,
+                getNumber = function (frag) {
+                    return Number(frag.substr(0, frag.length - 1))
+                };
+
+            map = map || {};
+
+            frags.shift(); // remove first item since we know it is the filename
+
+            frags.forEach(function (frag) {
+                attrId = frag.charAt(frag.length - 1);
+                if (attrId === 'w') {
+                    map.width = getNumber(frag);
+                } else if (attrId === 'h') {
+                    map.height = getNumber(frag);
+                }
+            });
+            return map;
         }
+
     });
 
-    return Kit;
+    var ElementKit = function (options) {
+        this.initialize(options);
+    };
+    ElementKit.prototype = {
+        /**
+         * Does a little setup for element kit.
+         */
+        initialize: function (options) {
+
+            var self = this;
+
+            this.options = extend({
+                autoLoad: true
+            }, options);
+
+            // can only define the element property once or an exception will be thrown
+            if (this.options.autoLoad && !loaded) {
+                // load element kit on ALL DOM Elements when they are created
+                loaded = Object.defineProperty(window.Element.prototype, 'kit', {
+                    get: function () {
+                        return self.setup(this);
+                    }
+                });
+            }
+        },
+
+        /**
+         * Sets up the kit on an element.
+         * @param {HTMLElement} el - The element in which to load the kit onto
+         * @returns {Element|ImageElement} Returns the element instance
+         */
+        setup: function (el) {
+            var ElementClass;
+            // only add a new instance of the class if it hasnt already been added
+            if (!cache[el._kitId]) {
+                ElementClass = el instanceof window.HTMLImageElement ? ImageElement : Element;
+                elementCount++;
+                el._kitId = elementCount;
+                cache[el._kitId] = new ElementClass(el);
+            }
+            return cache[el._kitId];
+        },
+        /**
+         * Destroys element kit.
+         */
+        destroy: function () {}
+
+    };
+
+    return ElementKit;
 
 }));
