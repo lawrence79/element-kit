@@ -463,7 +463,7 @@
             var el = this.el,
                 src = el.getAttribute(srcAttr);
 
-            this._origSource = el.src; // store original src string
+            this._origSource = this._origSource || el.src; // store original src string
 
             if (!src) {
                 console.warn('ElementKit error: ImageElement has no "' + srcAttr + '" attribute to load');
