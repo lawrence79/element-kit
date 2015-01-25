@@ -121,15 +121,6 @@ module.exports = function(grunt) {
                 ],
                 commitMessage: 'release %VERSION%'
             }
-        },
-        watch: {
-            scripts: {
-                files: ['src/element-kit.js'],
-                tasks: ['copy', 'uglify'],
-                options: {
-                    spawn: false
-                }
-            }
         }
     });
 
@@ -165,8 +156,7 @@ module.exports = function(grunt) {
 
     grunt.registerTask( "server", [
         "build-files",
-        "connect:local",
-        "watch"
+        "connect:local"
     ]);
 
     grunt.registerTask( "test", [

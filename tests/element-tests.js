@@ -2,7 +2,7 @@ define([
     'sinon',
     'qunit',
     'test-utils',
-    'dist/element-kit'
+    'src/element-kit'
 ], function(
     Sinon,
     QUnit,

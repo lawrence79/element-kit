@@ -28,7 +28,6 @@
     "grunt-contrib-qunit": "~0.5.2",
     "grunt-contrib-requirejs": "0.4.4",
     "grunt-contrib-uglify": "^0.6.0",
-    "grunt-contrib-watch": "^0.6.1",
     "load-grunt-tasks": "0.6.0",
     "phantomjs": "~1.9.7",
     "qunitjs": "1.14.0"
