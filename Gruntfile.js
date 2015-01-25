@@ -75,7 +75,7 @@ module.exports = function(grunt) {
             },
             local: {
                 options: {
-                    options: { livereload: true }
+                    keepalive: true
                 }
             }
         },
@@ -155,7 +155,6 @@ module.exports = function(grunt) {
     });
 
     grunt.registerTask( "server", [
-        "build-files",
         "connect:local"
     ]);
 
