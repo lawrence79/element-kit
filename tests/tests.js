@@ -18,7 +18,8 @@ require.config({
 // require each test
 require([
     'tests/element-kit-tests',
-    'tests/element-tests'
+    'tests/element-tests',
+    'tests/image-element-tests'
 ], function() {
     QUnit.config.requireExpects = true;
     QUnit.start();
