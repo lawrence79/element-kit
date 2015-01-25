@@ -463,6 +463,7 @@
             var el = this.el,
                 src = el.getAttribute(srcAttr);
 
+
             this._origSource = this._origSource || el.src; // store original src string
 
             if (!src) {
@@ -474,23 +475,36 @@
                 src = this._getImageSourceSetPath(src);
             }
             this._loadImage(src, callback);
+            this._loadedSrc = src;
             return this;
+        },
+
+        /**
+         * Adds a source path to the src attribute of the image element.
+         * (injects the image into the browser's DOM).
+         */
+        show: function () {
+            if (this._loadedSrc) {
+                this.el.src = this._loadedSrc;
+            } else {
+                console.warn('ElementKit error: show() cannot be called on an image that has not been loaded via load()');
+            }
         },
 
         /**
          * Loads an image in a virtual DOM which will be cached in the browser and shown.
          * @param {string} src - The image source url
          * @param {Function} callback - Function that is called when image has loaded
-         * @returns {ImageElement} Returns the image element
+         * @param {HTMLImageElement} [el] - Optional image element to load the image onto
+         * @returns {string} Returns the image url source
          * @private
          */
-        _loadImage: function (src, callback) {
-            var img = new Image(),
-                el = this.el;
+        _loadImage: function (src, callback, el) {
+            var img = new Image();
+            el = el || document.createElement('img');
             img.onload = callback || function(){};
-            // simply loading the url in src attribute will cache it
             el.src = src;
-            return this;
+            return src;
         },
 
         /**
