@@ -2,11 +2,9 @@
     'use strict';
     // support both AMD and non-AMD
     if (typeof define === 'function' && define.amd) {
-        define(function () {
-            return factory();
-        });
+        define(factory);
     } else {
-        window.ElementKit = factory();
+        factory();
     }
 })((function () {
     'use strict';
@@ -605,17 +603,12 @@
         /**
          * Does a little setup for element kit.
          */
-        initialize: function (options) {
+        initialize: function () {
 
             var self = this;
-
-            this.options = extend({
-                autoLoad: true
-            }, options);
-
             // can only define the element property once or an exception will be thrown
-            if (this.options.autoLoad && !loaded) {
-                // load element kit on ALL DOM Elements when they are created
+            if (!loaded) {
+                // make element kit available on ALL DOM Elements when they are created
                 loaded = Object.defineProperty(window.Element.prototype, 'kit', {
                     get: function () {
                         return self.setup(this);
@@ -647,6 +640,6 @@
 
     };
 
-    return ElementKit;
+    return new ElementKit();
 
 }));
