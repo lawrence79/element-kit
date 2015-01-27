@@ -269,10 +269,10 @@ define([
                 QUnit.equal(callbackSpy.callCount, 2, 'callback is NOT immediately fired after a call to waitForTransition(), because the appropriate time hasnt yet elapsed');
                 setTimeout(function () {
                     QUnit.equal(callbackSpy.callCount, 3, 'waitForTransition() fires callback at the appropriate time when on an element that has multiples of both transition delays and durations');
-                    var highestTime = 0.2;
+                    var highestTime = 0.3;
                     var highestTimeMilliseconds = highestTime * 1000;
                     el.style.transitionDuration = ['100ms', '50ms'];
-                    el.style.transitionDelay = ['100ms', '0.2s', '300ms'];
+                    el.style.transitionDelay = ['100ms', highestTime + 's', '300ms'];
                     el.kit.waitForTransition(callbackSpy);
                     QUnit.equal(callbackSpy.callCount, 3, 'callback is NOT immediately fired after a call to waitForTransition(), because the appropriate time hasnt yet elapsed');
                     setTimeout(function () {
