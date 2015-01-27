@@ -200,11 +200,27 @@
          * @returns {Number} Returns the total CSS transition time in milliseconds
          */
         getTransitionDuration: function () {
-            var delay = this.getCssComputedProperty('transition-delay') || '0ms',
-                duration = this.getCssComputedProperty('transition-duration') || '0ms';
-            delay = this._convertCssTimeValueToMilliseconds(delay);
-            duration = this._convertCssTimeValueToMilliseconds(duration);
-            return delay + duration;
+            var delayProp = this.getCssComputedProperty('transition-delay') || '0ms',
+                durationProp = this.getCssComputedProperty('transition-duration') || '0ms',
+                times = Array.isArray(durationProp) ? durationProp : [durationProp],
+                delay = Array.isArray(delayProp) ? delayProp : [delayProp],
+                highest = 0,
+                map;
+
+            times.push.apply(times, delay); // account for delay
+
+            // calculate highest number of time
+            times.forEach(function (value) {
+                value.split(',').forEach(function (v) {
+                    v = this._convertCssTimeValueToMilliseconds(v);
+                    map = this._getCssPropUnitMap(v);
+                    if (map.num > highest) {
+                        highest = map.num;
+                    }
+                }.bind(this));
+            }.bind(this));
+
+            return highest;
         },
 
         /**
@@ -218,30 +234,42 @@
         },
 
         /**
+         * Takes a value and separates the number and unit into a key/value map.
+         * @param v - The value
+         * @returns {{num: Number, unit: string}} Returns the map
+         * @private
+         */
+        _getCssPropUnitMap: function (v) {
+            v.trim();
+            var num = v.match('[0-9\.]+'),
+                unit = 'ms';
+
+            num = num ? num[0] : '';
+            if (num) {
+                unit = v.split(num)[1];
+                num = Number(num);
+            }
+            return {
+                num: num,
+                unit: unit
+            };
+        },
+
+        /**
          * Converts a css timing unit value into milliseconds.
          * @param {string} val - The value string
-         * @returns {Number} Returns the number of milliseconds
+         * @returns {string} Returns the timing unit value in milliseconds
          * @private
          */
         _convertCssTimeValueToMilliseconds: function (val) {
-            var number = this._convertCssUnitToNumber(val),
+            var number = this._getCssPropUnitMap(val).num,
                 unit = val.replace(number, '');
             if (unit === 's') {
                 val = number * 1000;
             } else {
                 val = number;
             }
-            return val;
-        },
-
-        /**
-         * Removes the unit (px, ms, etc) from a css value and converts it to a number.
-         * @param {string} val - The css value
-         * @returns {Number} Returns the number with the css value unit removed
-         * @private
-         */
-        _convertCssUnitToNumber: function (val) {
-            return Number(val.replace(/[a-z]+/, ''));
+            return val + 'ms';
         },
 
         /**
