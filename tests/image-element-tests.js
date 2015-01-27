@@ -6,20 +6,12 @@ define([
 ], function(
     Sinon,
     QUnit,
-    TestUtils,
-    ElementKit
+    TestUtils
 ){
     "use strict";
     var kit;
 
-    QUnit.module('Image Element Tests', {
-        setup: function () {
-            kit = new ElementKit();
-        },
-        teardown: function () {
-            kit.destroy();
-        }
-    });
+    QUnit.module('Image Element Tests');
 
     QUnit.test('lazy loading an image in a custom attribute', function() {
         QUnit.expect(5);
