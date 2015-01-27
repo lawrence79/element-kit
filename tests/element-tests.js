@@ -211,19 +211,76 @@ define([
         QUnit.equal(el.kit.getCssComputedProperty('width'), value, 'calling getCssComputedProperty() returns correct value');
     });
     
-    QUnit.asyncTest('waitForTransition()', function() {
-        QUnit.expect(2);
+    QUnit.asyncTest('waitForTransition() when there is a single computed property', function() {
+        QUnit.expect(6);
         var fixture = document.getElementById('qunit-fixture');
-        var html = '<div class="container"></div>';
         var el = document.createElement('div');
         fixture.appendChild(el);
         var callbackSpy = Sinon.spy();
-        el.style.transitionDelay = '100ms';
+        var highestTimeMilliseconds = 100;
+        el.style.transitionDelay = highestTimeMilliseconds + 'ms';
         el.kit.waitForTransition(callbackSpy);
-        QUnit.equal(callbackSpy.callCount, 0, 'after calling waitForTransition() on an element that has a transition delay of 100ms, the callback is not fired immediately because the transition hasnt finished');
+        QUnit.equal(callbackSpy.callCount, 0, 'after calling waitForTransition() on an element that has a transition delay, the callback is not fired immediately because the transition hasnt finished');
         setTimeout(function () {
-            QUnit.equal(callbackSpy.callCount, 1, 'callback is fired after 100ms elapses');
-            QUnit.start();
+            QUnit.equal(callbackSpy.callCount, 1, 'callback is fired after the transition delay time elapses');
+            var highestTimeMilliseconds = 150;
+            el.style.transitionDelay = '100ms';
+            el.style.transitionDuration = highestTimeMilliseconds + 'ms';
+            el.kit.waitForTransition(callbackSpy);
+            QUnit.equal(callbackSpy.callCount, 1, 'callback is NOT immediately fired after a call to waitForTransition(), because the appropriate time hasnt yet elapsed');
+            setTimeout(function () {
+                QUnit.equal(callbackSpy.callCount, 2, 'after setting the transition duration to a higher number than the transition delay, callback is fired after the transition duration time elapses');
+                var highestTime = 0.3;
+                var highestTimeMilliseconds = highestTime * 1000;
+                el.style.transitionDelay = '100ms';
+                el.style.transitionDuration = highestTime + 's';
+                el.kit.waitForTransition(callbackSpy);
+                QUnit.equal(callbackSpy.callCount, 2, 'callback is NOT immediately fired after a call to waitForTransition(), because the appropriate time hasnt yet elapsed');
+                setTimeout(function () {
+                    QUnit.equal(callbackSpy.callCount, 3, 'callback is still fired after the transition duration time elapses, even when it uses a seconds unit with a time value lower than the milliseconds time value of the transition duration');
+                    QUnit.start();
+                },highestTimeMilliseconds  + 1);
+            }, highestTimeMilliseconds + 1);
+        }, highestTimeMilliseconds + 1);
+    });
+
+    QUnit.asyncTest('waitForTransition() on element that has multiple computed transition properties', function() {
+        QUnit.expect(8);
+        var fixture = document.getElementById('qunit-fixture');
+        var el = document.createElement('div');
+        fixture.appendChild(el);
+        var callbackSpy = Sinon.spy();
+        var highestTimeMilliseconds = 100;
+        el.style.transitionDelay = [highestTimeMilliseconds + 'ms', '50ms'];
+        el.kit.waitForTransition(callbackSpy);
+        QUnit.equal(callbackSpy.callCount, 0, 'callback is NOT immediately fired after a call to waitForTransition(), because the appropriate time hasnt yet elapsed');
+        setTimeout(function () {
+            QUnit.equal(callbackSpy.callCount, 1, 'waitForTransition() fires callback at the appropriate time when on an element that has multiple transition delays');
+            var highestTimeMilliseconds = 200;
+            el.style.transitionDuration = ['40ms', highestTimeMilliseconds + 'ms'];
+            el.kit.waitForTransition(callbackSpy);
+            QUnit.equal(callbackSpy.callCount, 1, 'callback is NOT immediately fired after a call to waitForTransition(), because the appropriate time hasnt yet elapsed');
+            setTimeout(function () {
+                QUnit.equal(callbackSpy.callCount, 2, 'waitForTransition() fires callback at the appropriate time when on an element that has multiple transition durations');
+                var highestTimeMilliseconds = 200;
+                el.style.transitionDuration = ['100ms', '50ms'];
+                el.style.transitionDelay = [highestTimeMilliseconds + 'ms', '50ms'];
+                el.kit.waitForTransition(callbackSpy);
+                QUnit.equal(callbackSpy.callCount, 2, 'callback is NOT immediately fired after a call to waitForTransition(), because the appropriate time hasnt yet elapsed');
+                setTimeout(function () {
+                    QUnit.equal(callbackSpy.callCount, 3, 'waitForTransition() fires callback at the appropriate time when on an element that has multiples of both transition delays and durations');
+                    var highestTime = 0.2;
+                    var highestTimeMilliseconds = highestTime * 1000;
+                    el.style.transitionDuration = ['100ms', '50ms'];
+                    el.style.transitionDelay = ['100ms', '0.2s', '300ms'];
+                    el.kit.waitForTransition(callbackSpy);
+                    QUnit.equal(callbackSpy.callCount, 3, 'callback is NOT immediately fired after a call to waitForTransition(), because the appropriate time hasnt yet elapsed');
+                    setTimeout(function () {
+                        QUnit.equal(callbackSpy.callCount, 4, 'waitForTransition() fires callback at the appropriate time when on an element that has multiples of both transition delays and durations, even when one has a seconds unit');
+                        QUnit.start();
+                    }, highestTimeMilliseconds + 1);
+                }, highestTimeMilliseconds + 1);
+            }, highestTimeMilliseconds);
         }, 101);
     });
 
