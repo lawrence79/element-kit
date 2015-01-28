@@ -71,15 +71,12 @@
         },
 
         /**
-         * Returns the distance of the element relative to the top of the window/document.
-         * @returns {Number|undefined}
+         * Causes the browser to scroll until the element is in view.
+         * @param {Number} topOffset - Scrolling will stop once the element is this many pixels from top of the viewport
          */
-        getWindowOffsetTop: function () {
-            var offset = 0;
-            this._traverseEachParent(function (parent) {
-                offset = offset + parent.offsetTop;
-            });
-            return offset;
+        scrollIntoView: function (topOffset) {
+            topOffset = topOffset || 0;
+            window.scrollTo(0, topOffset + this.el.getBoundingClientRect().top);
         },
 
         /**
