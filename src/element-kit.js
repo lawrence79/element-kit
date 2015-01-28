@@ -517,8 +517,6 @@
             var el = this.el,
                 src = el.getAttribute(srcAttr);
 
-            this._origSource = this._origSource || el.src; // store original src string
-
             if (!src) {
                 console.warn('ElementKit error: ImageElement has no "' + srcAttr + '" attribute to load');
             }
@@ -528,18 +526,7 @@
                 src = this._getImageSourceSetPath(src);
             }
             this._loadImage(src, callback);
-            this._loadedSrc = src;
             return this;
-        },
-
-        /**
-         * Adds a source path to the src attribute of the image element.
-         * (injects the image into the browser's DOM).
-         */
-        show: function () {
-            if (this._loadedSrc) {
-                this.el.src = this._loadedSrc;
-            }
         },
 
         /**
@@ -550,20 +537,11 @@
          * @returns {string} Returns the image url source
          * @private
          */
-        _loadImage: function (src, callback, el) {
+        _loadImage: function (src, callback) {
             var img = new Image();
-            el = el || document.createElement('img');
             img.onload = callback || function(){};
-            el.src = src;
+            this.el.src = src;
             return src;
-        },
-
-        /**
-         * Gets the original src path before element kit got involved.
-         * @returns {string|*}
-         */
-        getInitialImageSourcePath: function () {
-            return this._origSource;
         },
 
         /**
