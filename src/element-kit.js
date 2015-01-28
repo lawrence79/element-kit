@@ -71,6 +71,13 @@
         },
 
         /**
+         * Causes the browser to scroll until the element is in view.
+         */
+        scrollIntoView: function () {
+            window.scrollTo(0, this.getWindowOffsetTop());
+        },
+
+        /**
          * Returns the distance of the element relative to the top of the window/document.
          * @returns {Number|undefined}
          */

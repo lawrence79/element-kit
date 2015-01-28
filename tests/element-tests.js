@@ -322,4 +322,29 @@ define([
         document.body.removeChild(firstEl);
     });
 
+    QUnit.test('scrolling an element into view', function() {
+        QUnit.expect(1);
+        var windowScrollToStub = Sinon.stub(window, 'scrollTo');
+
+        var firstEl = document.createElement('div');
+        firstEl.style.position = 'absolute';
+        firstEl.style.top = '0';
+        firstEl.style.left = '0';
+        firstEl.style.paddingTop = '20px';
+        firstEl.style.marginTop = '40px';
+        var secondEl = document.createElement('div');
+        secondEl.style.paddingTop = '20px';
+        var thirdEl = document.createElement('div');
+        thirdEl.style.paddingTop = '20px';
+        // append nodes
+        secondEl.appendChild(thirdEl);
+        firstEl.appendChild(secondEl);
+        document.body.appendChild(firstEl);
+        thirdEl.kit.scrollIntoView();
+        QUnit.deepEqual(windowScrollToStub.args[0], [0, 100], 'calling scrollIntoView() on third nested element calls window.scrollTo with correct args');
+        document.body.removeChild(firstEl);
+
+        windowScrollToStub.restore();
+    });
+
 });
