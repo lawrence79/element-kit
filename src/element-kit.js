@@ -71,6 +71,38 @@
         },
 
         /**
+         * Returns the distance of the element relative to the top of the window/document.
+         * @returns {Number|undefined}
+         */
+        getWindowOffsetTop: function () {
+            var offset = 0;
+            this._traverseEachParent(function (parent) {
+                offset = offset + parent.offsetTop;
+            });
+            return offset;
+        },
+
+        /**
+         * Bubbles up each parent node of the element, triggering the callback on each element until traversal
+         * either runs out of parent nodes, reaches the document element, or if callback returns a falsy value
+         * @param {Function} callback - A callback that fires which gets passed the current element
+         * @param {HTMLElement} [startEl] - The element where traversal will begin (including the passed element), defaults to current el
+         * @private
+         */
+        _traverseEachParent: function (callback, startEl) {
+            var parentNode = startEl || this.el,
+                predicate;
+            // check if the node has classname property, if not, we know we're at the #document element
+            while (parentNode && typeof parentNode.className === 'string') {
+                predicate = callback(parentNode);
+                if (predicate !== undefined && !predicate) {
+                    break;
+                }
+                parentNode = parentNode.parentNode;
+            }
+        },
+
+        /**
          * Wrap a parent container element around the element.
          * @param {string} html - The wrapper html
          */
@@ -100,17 +132,13 @@
          * @param {string} className - The class name that the ancestor must have to match
          */
         getClosestAncestorElementByClassName: function (className) {
-            var result,
-                parentNode = this.el.parentNode;
-            // we must check if the node has classname property because some don't (#document element)
-            while (parentNode && typeof parentNode.className === 'string') {
-                if (parentNode.kit._hasClass(className)) {
-                    result = parentNode;
-                    break;
-                } else {
-                    parentNode = parentNode.parentNode;
+            var result;
+            this._traverseEachParent(function (parent) {
+                if (parent.kit._hasClass(className)) {
+                    result = parent;
+                    return false;
                 }
-            }
+            }, this.el.parentNode);
             return result;
         },
 
