@@ -71,15 +71,6 @@
         },
 
         /**
-         * Causes the browser to scroll until the element is in view.
-         * @param {Number} topOffset - Scrolling will stop once the element is this many pixels from top of the viewport
-         */
-        scrollIntoView: function (topOffset) {
-            topOffset = topOffset || 0;
-            window.scrollTo(0, topOffset + this.el.getBoundingClientRect().top);
-        },
-
-        /**
          * Bubbles up each parent node of the element, triggering the callback on each element until traversal
          * either runs out of parent nodes, reaches the document element, or if callback returns a falsy value
          * @param {Function} callback - A callback that fires which gets passed the current element

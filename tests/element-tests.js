@@ -302,16 +302,4 @@ define([
         QUnit.equal(el.kit.dataset.newValue, testVal, 'after setting a new value on dataset, the new value is returned when queried');
     });
 
-    QUnit.test('scrolling an element into view', function() {
-        QUnit.expect(1);
-        var el = document.createElement('div');
-        var boundingRectObj = {top: 80};
-        var windowScrollToStub = Sinon.stub(window, 'scrollTo');
-        var getBoundingClientRectStub = Sinon.stub(Element.prototype, 'getBoundingClientRect').returns(boundingRectObj);
-        el.kit.scrollIntoView();
-        QUnit.deepEqual(windowScrollToStub.args[0], [0, boundingRectObj.top], 'calling scrollIntoView() on third nested element calls window.scrollTo with correct args');
-        windowScrollToStub.restore();
-        getBoundingClientRectStub.restore();
-    });
-
 });
