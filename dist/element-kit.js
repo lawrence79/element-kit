@@ -1,5 +1,5 @@
 /** 
-* ElementKit - v0.2.3.
+* element-kit - v0.2.4.
 * https://github.com/mkay581/element-kit.git
 * Copyright 2015 Mark Kennedy. Licensed MIT.
 */
@@ -76,6 +76,26 @@
         },
 
         /**
+         * Bubbles up each parent node of the element, triggering the callback on each element until traversal
+         * either runs out of parent nodes, reaches the document element, or if callback returns a falsy value
+         * @param {Function} callback - A callback that fires which gets passed the current element
+         * @param {HTMLElement} [startEl] - The element where traversal will begin (including the passed element), defaults to current el
+         * @private
+         */
+        _traverseEachParent: function (callback, startEl) {
+            var parentNode = startEl || this.el,
+                predicate;
+            // check if the node has classname property, if not, we know we're at the #document element
+            while (parentNode && typeof parentNode.className === 'string') {
+                predicate = callback(parentNode);
+                if (predicate !== undefined && !predicate) {
+                    break;
+                }
+                parentNode = parentNode.parentNode;
+            }
+        },
+
+        /**
          * Wrap a parent container element around the element.
          * @param {string} html - The wrapper html
          */
@@ -105,17 +125,13 @@
          * @param {string} className - The class name that the ancestor must have to match
          */
         getClosestAncestorElementByClassName: function (className) {
-            var result,
-                parentNode = this.el.parentNode;
-            // we must check if the node has classname property because some don't (#document element)
-            while (parentNode && typeof parentNode.className === 'string') {
-                if (parentNode.kit._hasClass(className)) {
-                    result = parentNode;
-                    break;
-                } else {
-                    parentNode = parentNode.parentNode;
+            var result;
+            this._traverseEachParent(function (parent) {
+                if (parent.kit._hasClass(className)) {
+                    result = parent;
+                    return false;
                 }
-            }
+            }, this.el.parentNode);
             return result;
         },
 
@@ -494,8 +510,6 @@
             var el = this.el,
                 src = el.getAttribute(srcAttr);
 
-            this._origSource = this._origSource || el.src; // store original src string
-
             if (!src) {
                 console.warn('ElementKit error: ImageElement has no "' + srcAttr + '" attribute to load');
             }
@@ -505,18 +519,7 @@
                 src = this._getImageSourceSetPath(src);
             }
             this._loadImage(src, callback);
-            this._loadedSrc = src;
             return this;
-        },
-
-        /**
-         * Adds a source path to the src attribute of the image element.
-         * (injects the image into the browser's DOM).
-         */
-        show: function () {
-            if (this._loadedSrc) {
-                this.el.src = this._loadedSrc;
-            }
         },
 
         /**
@@ -527,20 +530,11 @@
          * @returns {string} Returns the image url source
          * @private
          */
-        _loadImage: function (src, callback, el) {
+        _loadImage: function (src, callback) {
             var img = new Image();
-            el = el || document.createElement('img');
             img.onload = callback || function(){};
-            el.src = src;
+            this.el.src = src;
             return src;
-        },
-
-        /**
-         * Gets the original src path before element kit got involved.
-         * @returns {string|*}
-         */
-        getInitialImageSourcePath: function () {
-            return this._origSource;
         },
 
         /**
