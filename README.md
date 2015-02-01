@@ -81,7 +81,7 @@ element.kit.waitForTransition(element, function () {
 });
 ```
 
-More methods and usage can be found on the [docs](https://github.com/mkay581/element-kit/blob/master/docs/element.md) page.
+More methods and usage can be found on the [docs](https://github.com/mkay581/element-kit/blob/master/docs) page.
 
 ## Release History
 
