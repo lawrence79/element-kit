@@ -531,9 +531,9 @@
          * @private
          */
         _loadImage: function (src, callback) {
-            var img = new Image();
+            var img = this.el;
             img.onload = callback || function(){};
-            this.el.src = src;
+            img.src = src;
             return src;
         },
 
