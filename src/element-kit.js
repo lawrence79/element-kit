@@ -601,7 +601,8 @@
 
             var self = this;
             // can only define the element property once or an exception will be thrown
-            if (!loaded) {
+            // must also check if element kit was loaded by some other module dependency
+            if (!loaded && !document.body.kit) {
                 // make element kit available on ALL DOM Elements when they are created
                 loaded = Object.defineProperty(window.Element.prototype, 'kit', {
                     get: function () {
