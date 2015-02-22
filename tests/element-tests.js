@@ -1,14 +1,10 @@
-define([
-    'sinon',
-    'qunit',
-    'test-utils',
-    'src/element-kit'
-], function(
-    Sinon,
-    QUnit,
-    TestUtils
-){
-    "use strict";
+var Sinon = require('sinon');
+var QUnit = require('qunit');
+var TestUtils = require('test-utils');
+var ElementKit = require('../src/element-kit');
+
+module.exports = (function () {
+    'use strict';
 
     QUnit.module('Element Tests');
 
@@ -302,4 +298,4 @@ define([
         QUnit.equal(el.kit.dataset.newValue, testVal, 'after setting a new value on dataset, the new value is returned when queried');
     });
 
-});
+})();

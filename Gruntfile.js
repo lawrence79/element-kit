@@ -4,27 +4,13 @@ module.exports = function(grunt) {
     grunt.initConfig({
         pkg: grunt.file.readJSON("package.json"),
         bt: {
-            uglifyFiles: {
-                'dist/element-kit.min.js': ['src/element-kit.js']
-            }
-        },
-        requirejs: {
-            compile: {
-                options: {
-                    baseUrl: 'src',
-                    dir: "dist",
-                    removeCombined: true,
-                    optimize: 'uglify',
-                    uglify: {
-                        preserveComments: true,
-                        ASCIIOnly: true,
-                        output: 'element-kit.min.js'
-                    }
-                }
+            dist: 'dist',
+            src: ['src/element-kit.js'],
+            tests: {
+                qunit: ['tests/*.js']
             }
         }
     });
 
-    // Load grunt tasks from node modules
     require("load-grunt-tasks")(grunt);
 };

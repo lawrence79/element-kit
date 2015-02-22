@@ -1,13 +1,8 @@
-define([
-    'sinon',
-    'qunit',
-    'test-utils',
-    'src/element-kit'
-], function(
-    Sinon,
-    QUnit,
-    TestUtils
-){
+var QUnit = require('qunit');
+var TestUtils = require('test-utils');
+var ElementKit = require('../src/element-kit');
+
+module.exports = (function () {
     "use strict";
 
     QUnit.module('Kit Tests');
@@ -28,4 +23,4 @@ define([
         QUnit.deepEqual(firstEl, firstEl.kit.el, 'first kit\'s el still references the first el');
     });
 
-});
+})();
