@@ -7,12 +7,18 @@ module.exports = function(grunt) {
             dist: 'dist',
             uglify: {
                 files: {
-                    'dist/element-kit-min.js': ['src/**/*.js']
+                    'dist/element-kit-min.js': ['dist/element-kit.js']
                 }
             },
             browserify: {
                 files: {
                     'dist/element-kit.js': ['src/**/*.js']
+                },
+                options: {
+                    browserifyOptions: {
+                        standalone: 'ElementKit'
+                    }
+
                 }
             },
             tests: {
