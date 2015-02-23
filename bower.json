@@ -1,6 +1,6 @@
 {
   "name": "element-kit",
-  "version": "0.2.4",
+  "version": "0.3.0",
   "homepage": "https://github.com/mkay581/element-kit",
   "authors": [
     "Mark Kennedy <mkay581@gmail.com>"
@@ -26,10 +26,5 @@
     "bower_components",
     "test",
     "tests"
-  ],
-  "devDependencies": {
-    "requirejs": "~2.1.15",
-    "qunit": "~1.16.0",
-    "sinonjs": "~1.10.2"
-  }
+  ]
 }

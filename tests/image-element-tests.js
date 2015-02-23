@@ -1,15 +1,10 @@
-define([
-    'sinon',
-    'qunit',
-    'test-utils',
-    'src/element-kit'
-], function(
-    Sinon,
-    QUnit,
-    TestUtils
-){
+var Sinon = require('sinon');
+var QUnit = require('qunit');
+var TestUtils = require('test-utils');
+var ElementKit = require('../src/element-kit');
+
+module.exports = (function () {
     "use strict";
-    var kit;
 
     QUnit.module('Image Element Tests');
 
@@ -46,4 +41,4 @@ define([
         window.innerWidth = origWindowWidth;
     });
 
-});
+})();
