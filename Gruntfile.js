@@ -5,9 +5,20 @@ module.exports = function(grunt) {
         pkg: grunt.file.readJSON("package.json"),
         bt: {
             dist: 'dist',
-            src: ['src/element-kit.js'],
+            uglify: {
+                files: {
+                    'dist/element-kit-min.js': ['src/**/*.js']
+                }
+            },
+            browserify: {
+                files: {
+                    'dist/element-kit.js': ['src/**/*.js']
+                }
+            },
             tests: {
-                qunit: ['tests/*.js']
+                qunit: {
+                    src: ['tests/*.js']
+                }
             }
         }
     });
