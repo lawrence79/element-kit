@@ -15,12 +15,12 @@ var ImageElement = function (el) {
 ImageElement.prototype = utils.extend({}, Element.prototype, {
     /**
      * Loads the image asset from a provided source url.
-     * @param {string} srcAttr - The attribute on the element which has the image source url
+     * @param {string} srcAttr - The attribute on the element which has the image source url or any url
      * @param {Function} [callback] - The callback fired when the image has loaded
      */
     load: function (srcAttr, callback) {
         var el = this.el,
-            src = el.getAttribute(srcAttr);
+            src = el.getAttribute(srcAttr) || srcAttr;
 
         if (!src) {
             console.warn('ElementKit error: ImageElement has no "' + srcAttr + '" attribute to load');

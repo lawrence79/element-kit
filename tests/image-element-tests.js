@@ -45,16 +45,25 @@ module.exports = (function () {
         QUnit.expect(1);
         var imageEl = document.createElement('img');
         var callbackSpy = Sinon.spy();
-        var testSrcSetPaths = 'medium.jpg 1000w, large.jpg 2000w';
-        var origWindowWidth = window.innerWidth;
-        window.innerWidth = 1200;
+        var srcAttribute = 'medium.jpg';
         imageEl.setAttribute('src', ''); //src should be empty initially
-        imageEl.setAttribute('my-srcset', testSrcSetPaths);
+        imageEl.setAttribute('my-srcset', srcAttribute);
         // test load
         imageEl.kit.load('my-srcset', callbackSpy);
         imageEl.onload(); // trigger image load
         QUnit.deepEqual(callbackSpy.args[0][0], imageEl, 'once image is loaded, callback is fired with image elemnt as first argument');
-        window.innerWidth = origWindowWidth;
+    });
+
+    QUnit.test('load() should accept any url as first parameter and load it', function() {
+        QUnit.expect(1);
+        var imageEl = document.createElement('img');
+        var testImageUrl = 'my/faux/image.jpg';
+        imageEl.setAttribute('src', ''); //src should be empty initially
+        imageEl.setAttribute('data-image', testImageUrl);
+        // test load
+        imageEl.kit.load('data-image');
+        imageEl.onload(); // trigger image load
+        QUnit.deepEqual(imageEl.getAttribute('src'), testImageUrl, 'url passed was loaded');
     });
 
 })();
