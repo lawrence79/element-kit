@@ -1,6 +1,6 @@
 {
   "name": "element-kit",
-  "version": "0.4.1",
+  "version": "0.5.0",
   "description": "A better cross-browser (HTML)Element API. Supports IE9+, all modern browsers, and mobile.",
   "repository": {
     "type": "git",
@@ -19,7 +19,7 @@
     "dataset",
     "classlist"
   ],
-  "main": "dist/element-kit.js",
+  "main": "src/element-kit.js",
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
   },
