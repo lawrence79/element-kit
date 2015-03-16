@@ -1,5 +1,5 @@
 /** 
-* element-kit - v0.4.0.
+* element-kit - v0.4.1.
 * https://github.com/mkay581/element-kit.git
 * Copyright 2015 Mark Kennedy. Licensed MIT.
 */
