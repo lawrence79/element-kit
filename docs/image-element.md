@@ -9,7 +9,7 @@ The following methods will be available to you under the "kit" property of all o
 
 This method is excellent for lazy-loading or loading images based on conditions (i.e loading low-quality images on lower bandwidths for mobile, for instance).
 It loads and shows an image using the url path specified in the custom attribute `attr` that you pass it. `attr` is a string denoting
-the custom attribute (on the element) that will contain the path of the image to be loaded. The second argument `callback`
+the custom attribute (on the element) that will contain the path of the image to be loaded or any image url you wish to load. The second argument `callback`
  should be a function that you want fired when the image is successfully fetched from the server, loaded and shown to the user.
 
 ```javascript
