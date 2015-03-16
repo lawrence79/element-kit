@@ -41,4 +41,20 @@ module.exports = (function () {
         window.innerWidth = origWindowWidth;
     });
 
+    QUnit.test('load() call should fire a callback with the image element as first argument', function() {
+        QUnit.expect(1);
+        var imageEl = document.createElement('img');
+        var callbackSpy = Sinon.spy();
+        var testSrcSetPaths = 'medium.jpg 1000w, large.jpg 2000w';
+        var origWindowWidth = window.innerWidth;
+        window.innerWidth = 1200;
+        imageEl.setAttribute('src', ''); //src should be empty initially
+        imageEl.setAttribute('my-srcset', testSrcSetPaths);
+        // test load
+        imageEl.kit.load('my-srcset', callbackSpy);
+        imageEl.onload(); // trigger image load
+        QUnit.deepEqual(callbackSpy.args[0][0], imageEl, 'once image is loaded, callback is fired with image elemnt as first argument');
+        window.innerWidth = origWindowWidth;
+    });
+
 })();
