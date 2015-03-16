@@ -1,5 +1,5 @@
 /** 
-* element-kit - v0.3.2.
+* element-kit - v0.3.3.
 * https://github.com/mkay581/element-kit.git
 * Copyright 2015 Mark Kennedy. Licensed MIT.
 */
@@ -549,15 +549,14 @@ ImageElement.prototype = utils.extend({}, Element.prototype, {
      * Loads an image in a virtual DOM which will be cached in the browser and shown.
      * @param {string} src - The image source url
      * @param {Function} callback - Function that is called when image has loaded
-     * @param {HTMLImageElement} [el] - Optional image element to load the image onto
-     * @returns {string} Returns the image url source
      * @private
      */
     _loadImage: function (src, callback) {
         var img = this.el;
-        img.onload = callback || function(){};
+        img.onload = function () {
+            callback ? callback(img) : null;
+        };
         img.src = src;
-        return src;
     },
 
     /**
