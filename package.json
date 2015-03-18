@@ -32,5 +32,8 @@
     "load-grunt-tasks": "0.6.0",
     "resolve": "^1.1.5",
     "sinon": "^1.12.2"
+  },
+  "scripts": {
+    "test": "grunt test"
   }
 }
