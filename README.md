@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/mkay581/element-kit.svg?branch=master)](https://travis-ci.org/mkay581/element-kit)
+
 # Element Kit
 
 A lightweight library that allows you to use [Element](https://developer.mozilla.org/en-US/docs/Web/API/Element) and
