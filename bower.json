@@ -6,7 +6,7 @@
     "Mark Kennedy <mkay581@gmail.com>"
   ],
   "description": "A better cross-browser (HTML)Element API. Supports IE9+, all modern browsers, and mobile.",
-  "main": "dist/element-kit.js",
+  "main": "index.js",
   "moduleType": [
     "amd",
     "es6",

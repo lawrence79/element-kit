@@ -33,5 +33,20 @@ module.exports = {
             }
         }
         return merged;
+    },
+
+    /**
+     * Triggers a method on an html collection.
+     * @param {HTMLCollection} els - A collection of elements
+     * @param {string} method - The method to call on each of the elements
+     * @param {Array} [params] - An array of parameters in which the pass to the method
+     */
+    triggerHtmlCollectionMethod: function (els, method, params) {
+        var count = els.length,
+            i, el;
+        for (i = 0; i < count; i++) {
+            el = els[i];
+            el.kit[method].apply(el.kit, params);
+        }
     }
 };

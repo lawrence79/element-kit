@@ -19,7 +19,6 @@
     "dataset",
     "classlist"
   ],
-  "main": "src/element-kit.js",
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
   },
