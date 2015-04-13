@@ -23,13 +23,9 @@
     "registry": "https://registry.npmjs.org/"
   },
   "devDependencies": {
-    "glob": "^4.4.0",
+    "build-tools": "^1.2.7",
     "grunt": "0.4.5",
-    "grunt-browserify": "^3.4.0",
-    "grunt-build-tools": "~0.5.2",
-    "grunt-contrib-concat": "^0.5.1",
     "load-grunt-tasks": "0.6.0",
-    "resolve": "^1.1.5",
     "sinon": "^1.12.2"
   },
   "scripts": {

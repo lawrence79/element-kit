@@ -5,21 +5,21 @@ module.exports = function(grunt) {
         pkg: grunt.file.readJSON("package.json"),
         bt: {
             dist: 'dist',
-            uglify: {
+            build: {
+                files: {
+                    'dist/element-kit.js': ['src/**/*.js']
+                },
+                browserifyOptions: {
+                    standalone: 'ElementKit'
+                }
+            },
+            min: {
                 files: {
                     'dist/element-kit-min.js': ['dist/element-kit.js']
                 }
             },
-            browserify: {
-                files: {
-                    'dist/element-kit.js': ['src/**/*.js']
-                },
-                options: {
-                    browserifyOptions: {
-                        standalone: 'ElementKit'
-                    }
-
-                }
+            banner: {
+                files: ['build/*']
             },
             tests: {
                 qunit: {
@@ -28,6 +28,5 @@ module.exports = function(grunt) {
             }
         }
     });
-
-    require("load-grunt-tasks")(grunt);
+    grunt.loadNpmTasks('build-tools');
 };
