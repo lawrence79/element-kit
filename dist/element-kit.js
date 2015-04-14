@@ -1767,9 +1767,12 @@ ImageElement.prototype = utils.extend({}, Element.prototype, {
      */
     _loadImage: function (src) {
         var img = this.el;
-        return new Promise(function (resolve) {
+        return new Promise(function (resolve, reject) {
             img.onload = function () {
                 resolve(img);
+            };
+            img.onerror = function () {
+                reject(new Error('ImageElement error: image path "' + src + '" returned an error'));
             };
             img.src = src;
         });
