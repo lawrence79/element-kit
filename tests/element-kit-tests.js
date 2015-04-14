@@ -1,26 +1,23 @@
-var QUnit = require('qunit');
+var sinon = require('sinon');
 var TestUtils = require('test-utils');
-var ElementKit = require('../src/element-kit');
+var assert = require('assert');
 
-module.exports = (function () {
-    "use strict";
+require('../src/element-kit');
 
-    QUnit.module('Kit Tests');
+describe('Kit', function () {
 
-    QUnit.test('initialization', function() {
-        QUnit.expect(1);
+    it('should has different instances after initialize', function () {
         var firstEl = document.createElement('div');
         var secondEl = document.createElement('div');
-        QUnit.notDeepEqual(firstEl.kit, secondEl.kit, 'after kits initialized, each kit has a different instance');
+        assert.notDeepEqual(firstEl.kit, secondEl.kit, 'after kits initialized, each kit has a different instance');
     });
 
-    QUnit.test('ensuring the same instance is used', function() {
-        QUnit.expect(3);
+    it('multiple element kit\'s should return their own instances', function() {
         var firstEl = document.createElement('div');
-        QUnit.deepEqual(firstEl, firstEl.kit.el, 'after initializing first el, its kit instance references the first el also');
+        assert.deepEqual(firstEl, firstEl.kit.el, 'after initializing first el, its kit instance references the first el also');
         var secondEl = document.createElement('div');
-        QUnit.deepEqual(secondEl, secondEl.kit.el, 'after initialize second el, its kit instance references the second el same el');
-        QUnit.deepEqual(firstEl, firstEl.kit.el, 'first kit\'s el still references the first el');
+        assert.deepEqual(secondEl, secondEl.kit.el, 'after initialize second el, its kit instance references the second el same el');
+        assert.deepEqual(firstEl, firstEl.kit.el, 'first kit\'s el still references the first el');
     });
 
-})();
+});
