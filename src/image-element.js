@@ -2,6 +2,7 @@
 
 var utils = require('./utils');
 var Element = require('./element');
+var Promise = require('promise');
 
 /**
  * A class from which all image elements are based.
@@ -15,37 +16,38 @@ var ImageElement = function (el) {
 ImageElement.prototype = utils.extend({}, Element.prototype, {
     /**
      * Loads the image asset from a provided source url.
-     * @param {string} srcAttr - The attribute on the element which has the image source url or any url
-     * @param {Function} [callback] - The callback fired when the image has loaded
+     * @param {string} src - The attribute on the element which has the image source url or any url
      */
-    load: function (srcAttr, callback) {
-        var el = this.el,
-            src = el.getAttribute(srcAttr) || srcAttr;
+    load: function (src) {
+
+        src = this.el.getAttribute(src) || src;
 
         if (!src) {
-            console.warn('ElementKit error: ImageElement has no "' + srcAttr + '" attribute to load');
+            console.warn('ElementKit error: undefined was passed to load() call');
+            return Promise.resolve();
         }
 
         if (src.indexOf(',') !== -1) {
             // image is a srcset!
             src = this._getImageSourceSetPath(src);
         }
-        this._loadImage(src, callback);
-        return this;
+        return this._loadImage(src);
     },
 
     /**
      * Loads an image in a virtual DOM which will be cached in the browser and shown.
      * @param {string} src - The image source url
-     * @param {Function} callback - Function that is called when image has loaded
      * @private
+     * @returns {Promise}
      */
-    _loadImage: function (src, callback) {
+    _loadImage: function (src) {
         var img = this.el;
-        img.onload = function () {
-            callback ? callback(img) : null;
-        };
-        img.src = src;
+        return new Promise(function (resolve) {
+            img.onload = function () {
+                resolve(img);
+            };
+            img.src = src;
+        });
     },
 
     /**

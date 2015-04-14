@@ -22,7 +22,7 @@ module.exports = function(grunt) {
                 files: ['build/*']
             },
             tests: {
-                qunit: {
+                mocha: {
                     src: ['tests/*.js']
                 }
             }
