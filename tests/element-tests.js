@@ -265,4 +265,12 @@ describe('Element Tests', function () {
         assert.equal(el.kit.dataset.newValue, testVal, 'after setting a new value on dataset, the new value is returned when queried');
     });
 
+    it('should return camel-cased key when there is a hyphenated dataset attribute in the markup', function() {
+        var el = document.createElement('div');
+        var testProp = 'test-my-hyphen-prop';
+        var value = 'myval';
+        el.setAttribute('data-' + testProp, value);
+        assert.equal(el.kit.dataset.testMyHyphenProp, value, 'querying dataset returns camcel-cased key');
+    });
+
 });
