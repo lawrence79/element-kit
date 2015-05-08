@@ -49,4 +49,5 @@ module.exports = {
             el.kit[method].apply(el.kit, params);
         }
     }
+
 };

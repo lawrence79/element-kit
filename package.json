@@ -32,6 +32,7 @@
     "test": "grunt bt:test"
   },
   "dependencies": {
-    "promise": "^7.0.0"
+    "promise": "^7.0.0",
+    "string": "^3.1.1"
   }
 }

@@ -2,6 +2,7 @@
 
 var utils = require('./utils');
 var ElementKit = require('./element-kit');
+var S = require('string');
 
 var Element = function (el) {
     this.initialize(el);
@@ -390,6 +391,7 @@ Element.prototype = /** @lends Element */{
                 if (key.indexOf('data-') === 0) {
                     // data attribute found!
                     key = key.substr(5);
+                    key = S(key).camelize().s;
                     data[key] = value;
                 }
             }
