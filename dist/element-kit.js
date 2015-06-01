@@ -2868,12 +2868,16 @@ ImageElement.prototype = utils.extend({}, Element.prototype, {
      */
     _loadImage: function (src) {
         var img = this.el;
-        return new Promise(function (resolve, reject) {
+        return new Promise(function (resolve) {
             img.onload = function () {
                 resolve(img);
             };
             img.onerror = function () {
-                reject(new Error('ImageElement error: image path "' + src + '" returned an error'));
+                // IE 9-11 have an issue where it automatically triggers an error on some images,
+                // and then will immediately trigger onload() causing intermittent errors to appear
+                // until this is fixed or we have a workaround, we will be resolving
+                // even if there is an error
+                resolve(img);
             };
             img.src = src;
         });
