@@ -1,6 +1,6 @@
 {
   "name": "element-kit",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "A better cross-browser (HTML)Element API. Supports IE9+, all modern browsers, and mobile.",
   "repository": {
     "type": "git",
@@ -23,7 +23,7 @@
     "registry": "https://registry.npmjs.org/"
   },
   "devDependencies": {
-    "build-tools": "^1.2.7",
+    "build-tools": "^1.5.0",
     "grunt": "^0.4.5",
     "grunt-cli": "^0.1.13",
     "load-grunt-tasks": "0.6.0",
