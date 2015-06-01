@@ -23,7 +23,7 @@
     "registry": "https://registry.npmjs.org/"
   },
   "devDependencies": {
-    "build-tools": "^1.2.7",
+    "build-tools": "^1.5.0",
     "grunt": "^0.4.5",
     "grunt-cli": "^0.1.13",
     "load-grunt-tasks": "0.6.0",
